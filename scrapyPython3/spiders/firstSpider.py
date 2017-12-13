@@ -18,7 +18,7 @@ class FirstspiderSpider(scrapy.Spider):
         sel = Selector(response)
         box_div = sel.xpath('//div[@class="box650"]/div')       # 电影相关新闻内容
         for div in box_div:
-            title = div.xpath('.//h2/text()').extract_first(default='')
+            title = div.xpath('.//h2/a/text()').extract_first(default='')
             if title:
                 image_url = div.xpath('.//div[@class="box_pic"]/a/img/@src').extract()[0]       # 缩略图
                 content_url = div.xpath('.//div[@class="box_pic"]/a/@href').extract()[0]
@@ -27,7 +27,7 @@ class FirstspiderSpider(scrapy.Spider):
     def content_parse(self, response):
         sel = Selector(response)
         meta = response.meta
-        content = '\n'.join(sel.xpath('/div[@id="main_content"]/p/text()').extract())
+        content = '\n'.join(sel.xpath('//div[@id="main_content"]/p/text()').extract())
         file_path = os.path.join('D:/tangxuelin/testfile/spiderfile', (meta['title']+'.txt'))
         with open(file_path, 'w') as f:
             f.write(content)
