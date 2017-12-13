@@ -28,3 +28,34 @@ scrapy genspider firstSpider www.baidu.com
 参数分别为爬虫名称,允许和起始链接
 不出意外的话,在spiders文件夹内会新增一个名为firstSpider的py文件,内容由标准的scrapy模板生成,可以自行查找模板修改方法.
 
+firstSpider.py介绍
+name: 爬虫名称,在启动爬虫时需要用上
+allowed_domains: 允许追踪的域名,当爬虫运行中yield某个不属于该域名下的url会被抛弃
+start_urls: 一个列表,用来定义启动爬虫时开始的url
+
+parse: 对于response的处理方法
+
+先不管这些,先把scrapyd搭起来!
+安装依赖包
+```python
+pip install scrapyd
+pip install scrapyd-client
+```
+启动scrapyd服务
+```python
+scrapyd    # 在项目的根目录执行,会运行scrapyd服务,监听6800端口
+```
+文档[Scrapyd](http://scrapyd.readthedocs.io/en/stable/)
+将scrapyPython3项目发布到scrapyd中
+```python
+scrapyd-deploy target -p project 
+```
+事先取消scrapy.cfg文件中[deploy]下url的注释,并修改为[deploy:xxx]
+执行成功会打印信息:
+```python
+Deploying to project "scrapyPython3" in http://localhost:6800/addversion.json
+Server response (200):
+{"node_name": "tree", "status": "ok", "project": "scrapyPython3", "version": "1513146589", "spiders": 1}
+
+```
+显示大概是这样就算是完成发布成功了.
