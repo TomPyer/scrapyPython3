@@ -79,3 +79,18 @@ Selector是scrapy的选择器对象,根据条件选取我们所需要文本信�
 Request接受url, callback, meta等参数,将Request实例对象放入scrapy抓取队列中
 
 后续两个方法功能类似,为了展示如何更深层次的抓取需要的信息.
+
+一般来讲,是使用curl命令访问127.0.0.1:6800/xxx 并制定参数来操作scrapyd服务
+部分,部分情况下,windows下使用curl命令似乎不尽如人意,而且每次需要输入那么一长串的命令信息
+
+所以,duang! duang! duang! 
+自己写的curlApi文件就应运而生！
+启动爬虫
+```python
+python curmain.py -s scrapyPython3 firstSpider     # -s 为启动命令, 参数为项目名称和爬虫名称
+```
+关闭爬虫
+```python
+python curmain.py -c scrapyPython3 SpiderID     # -c 关闭爬虫命令, 参数为项目名称和爬虫ID
+```
+其他相关操作可以使用 -h 进行查看文本输出.
