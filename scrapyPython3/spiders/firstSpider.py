@@ -11,7 +11,7 @@ class FirstspiderSpider(scrapy.Spider):
 
     def parse(self, response):
         sel = Selector(response)        # 将response传给Selector生成Selector实例
-        next_url = sel.xpath('//ul[@class="clearfix"]/li[3]/a/@href').extract()     # 娱乐版块下的电影版块链接
+        next_url = sel.xpath('//ul[@class="clearfix"]/li[3]/a/@href').extract_first(default='')     # 娱乐版块下的电影版块链接
         yield Request(next_url, self.next_parse)
 
     def next_parse(self, response):

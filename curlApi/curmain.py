@@ -14,7 +14,7 @@ class CommondParse(object):
         parse = {'project': v, 'spider': args[0]}
         re_data = open_post_url(url, parse)
         if re_data['status'] == 'ok':
-            with open(r'D:\\work\\studyscrapy\\curApi\\job_id.txt', 'a') as f:
+            with open(r'D:\tangxuelin\stutest\scrapyPython3\curlApi\job_id.txt', 'a') as f:
                 f.write(args[0] + ':' + re_data['jobid'] + ' ' + str(datetime.now())+ '\n')
         print_info(re_data)
 
