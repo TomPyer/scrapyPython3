@@ -59,3 +59,23 @@ Server response (200):
 
 ```
 显示大概是这样就算是完成发布成功了.
+
+#### 二、第一个爬虫
+先拿一些基础的网页来展示功能效果
+比如[凤凰娱乐新闻](http://ent.ifeng.com/)
+也省的再创建一个爬虫了,直接对firstSpider进行修改使用
+
+注释掉allowed_domains字段,部分情况下才需要使用
+修改start_urls字段,改为待爬取的链接
+
+定义parse()函数处理response进行信息抓取
+```python
+    def parse(self, response):
+        sel = Selector(response)        # 将response传给Selector生成Selector实例
+        next_url = sel.xpath('//ul[@class="clearfix"]/li[3]/a/@href').extract()     # 娱乐版块下的电影版块链接
+        yield Request(next_url, self.next_parse)
+```
+Selector是scrapy的选择器对象,根据条件选取我们所需要文本信息等
+Request接受url, callback, meta等参数,将Request实例对象放入scrapy抓取队列中
+
+后续两个方法功能类似,为了展示如何更深层次的抓取需要的信息.
