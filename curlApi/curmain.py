@@ -99,7 +99,7 @@ class CommondParse(object):
 
 def open_post_url(url, data):
     try:
-        en_data = urllib.parse.urlencode(data)
+        en_data = urllib.parse.urlencode(data).encode('UTF8')
         req = urllib.request.Request(url)
         response = urllib.request.urlopen(req, en_data)
         return eval(response.read())
