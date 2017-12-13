@@ -18,10 +18,11 @@ class FirstspiderSpider(scrapy.Spider):
         sel = Selector(response)
         box_div = sel.xpath('//div[@class="box650"]/div')       # 电影相关新闻内容
         for div in box_div:
-            title = div.xpath('.//h2/text()').extract()[0]
-            image_url = div.xpath('.//div[@class="box_pic"]/a/img/@src').extract()[0]       # 缩略图
-            content_url = div.xpath('.//div[@class="box_pic"]/a/@href').extract()[0]
-            yield Request(content_url, self.content_parse, meta={'title': title, 'image_url': image_url})
+            title = div.xpath('.//h2/text()').extract_first(default='')
+            if title:
+                image_url = div.xpath('.//div[@class="box_pic"]/a/img/@src').extract()[0]       # 缩略图
+                content_url = div.xpath('.//div[@class="box_pic"]/a/@href').extract()[0]
+                yield Request(content_url, self.content_parse, meta={'title': title, 'image_url': image_url})
 
     def content_parse(self, response):
         sel = Selector(response)

@@ -99,3 +99,13 @@ python curmain.py -c scrapyPython3 SpiderID     # -c 关闭爬虫命令, 参数�
 并在curlApi目录下产生job_id.txt文件,方便查找job_id终止爬虫或查找对应日志文件.
 
 根据logs下产生的日志文件对spider进行调试修改
+
+推荐是在127.0.0.1:6800中查看当前项目状态(运行爬虫数,运行时间,日志文件)
+
+第二次运行
+```python
+title = div.xpath('.//h2/text()').extract()[0]
+IndexError: list index out of range
+```
+很常见的一个问题,部分情况下xpath并不一定能取值成功(即标签不存在或内容不存在的情况下)
+如果取值失败  .extract() 方法返回的是一个空列表,使用[0]取值则会触发IndexError错误.
