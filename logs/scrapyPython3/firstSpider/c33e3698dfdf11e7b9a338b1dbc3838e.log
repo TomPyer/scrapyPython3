@@ -1,0 +1,248 @@
+2017-12-13 16:29:45 [scrapy.utils.log] INFO: Scrapy 1.4.0 started (bot: scrapyPython3)
+2017-12-13 16:29:45 [scrapy.utils.log] INFO: Overridden settings: {'BOT_NAME': 'scrapyPython3', 'DOWNLOAD_DELAY': 3, 'LOG_FILE': 'logs\\scrapyPython3\\firstSpider\\c33e3698dfdf11e7b9a338b1dbc3838e.log', 'NEWSPIDER_MODULE': 'scrapyPython3.spiders', 'ROBOTSTXT_OBEY': True, 'SPIDER_MODULES': ['scrapyPython3.spiders']}
+2017-12-13 16:29:46 [scrapy.middleware] INFO: Enabled extensions:
+['scrapy.extensions.corestats.CoreStats',
+ 'scrapy.extensions.telnet.TelnetConsole',
+ 'scrapy.extensions.logstats.LogStats']
+2017-12-13 16:29:46 [scrapy.middleware] INFO: Enabled downloader middlewares:
+['scrapy.downloadermiddlewares.robotstxt.RobotsTxtMiddleware',
+ 'scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware',
+ 'scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware',
+ 'scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware',
+ 'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware',
+ 'scrapy.downloadermiddlewares.retry.RetryMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.MetaRefreshMiddleware',
+ 'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.RedirectMiddleware',
+ 'scrapy.downloadermiddlewares.cookies.CookiesMiddleware',
+ 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware',
+ 'scrapy.downloadermiddlewares.stats.DownloaderStats']
+2017-12-13 16:29:46 [scrapy.middleware] INFO: Enabled spider middlewares:
+['scrapy.spidermiddlewares.httperror.HttpErrorMiddleware',
+ 'scrapy.spidermiddlewares.offsite.OffsiteMiddleware',
+ 'scrapy.spidermiddlewares.referer.RefererMiddleware',
+ 'scrapy.spidermiddlewares.urllength.UrlLengthMiddleware',
+ 'scrapy.spidermiddlewares.depth.DepthMiddleware']
+2017-12-13 16:29:46 [scrapy.middleware] INFO: Enabled item pipelines:
+['scrapy.pipelines.images.ImagesPipeline']
+2017-12-13 16:29:46 [scrapy.core.engine] INFO: Spider opened
+2017-12-13 16:29:46 [scrapy.extensions.logstats] INFO: Crawled 0 pages (at 0 pages/min), scraped 0 items (at 0 items/min)
+2017-12-13 16:29:46 [scrapy.extensions.telnet] DEBUG: Telnet console listening on 127.0.0.1:6024
+2017-12-13 16:29:46 [scrapy.core.engine] DEBUG: Crawled (200) <GET http://ent.ifeng.com/robots.txt> (referer: None)
+2017-12-13 16:29:49 [scrapy.core.engine] DEBUG: Crawled (200) <GET http://ent.ifeng.com/> (referer: None)
+2017-12-13 16:29:53 [scrapy.core.engine] DEBUG: Crawled (200) <GET http://ent.ifeng.com/listpage/6/1/list.shtml> (referer: http://ent.ifeng.com/)
+2017-12-13 16:29:56 [scrapy.core.engine] DEBUG: Crawled (200) <GET http://ent.ifeng.com/a/20171213/43012943_0.shtml> (referer: http://ent.ifeng.com/listpage/6/1/list.shtml)
+2017-12-13 16:29:56 [scrapy.pipelines.files] DEBUG: File (uptodate): Downloaded image from <GET http://p2.ifengimg.com/cmpp/2017/12/13/14/d49e4068-71fa-4829-b3c0-59555f8198f0_size213_w450_h300.jpg> referred in <None>
+2017-12-13 16:29:56 [scrapy.pipelines.files] DEBUG: File (uptodate): Downloaded image from <GET http://p3.ifengimg.com/cmpp/2017/12/13/14/5d3f6408-25b4-425f-bd3e-6ce8dc8db9bd_size205_w450_h300.jpg> referred in <None>
+2017-12-13 16:29:56 [scrapy.core.scraper] DEBUG: Scraped from <200 http://ent.ifeng.com/a/20171213/43012943_0.shtml>
+{'image_urls': ['http://p2.ifengimg.com/cmpp/2017/12/13/14/d49e4068-71fa-4829-b3c0-59555f8198f0_size213_w450_h300.jpg',
+                'http://p3.ifengimg.com/cmpp/2017/12/13/14/5d3f6408-25b4-425f-bd3e-6ce8dc8db9bd_size205_w450_h300.jpg'],
+ 'images': [{'checksum': '7bab86c3b36fbe1ab2235f63f43aaa87',
+             'path': 'full/c4cfd89bdd778c030c2ac5493cfc78dcc7bb744c.jpg',
+             'url': 'http://p2.ifengimg.com/cmpp/2017/12/13/14/d49e4068-71fa-4829-b3c0-59555f8198f0_size213_w450_h300.jpg'},
+            {'checksum': '1b42f1315b3d2c5ddca155979b4eaefd',
+             'path': 'full/c56f21c10048bb6fbfa87e57aa04c50b586eed87.jpg',
+             'url': 'http://p3.ifengimg.com/cmpp/2017/12/13/14/5d3f6408-25b4-425f-bd3e-6ce8dc8db9bd_size205_w450_h300.jpg'}]}
+2017-12-13 16:29:59 [scrapy.core.engine] DEBUG: Crawled (200) <GET http://ent.ifeng.com/a/20171213/43012876_0.shtml> (referer: http://ent.ifeng.com/listpage/6/1/list.shtml)
+2017-12-13 16:30:00 [scrapy.pipelines.files] DEBUG: File (uptodate): Downloaded image from <GET http://d.ifengimg.com/mw600/img1.ugc.ifeng.com/newugc/20171213/11/wemedia/fbac8ef13d16c1ee058804071a3927d41349c66b_size1817_w2000_h1334.jpg> referred in <None>
+2017-12-13 16:30:00 [scrapy.core.scraper] DEBUG: Scraped from <200 http://ent.ifeng.com/a/20171213/43012876_0.shtml>
+{'image_urls': ['http://d.ifengimg.com/mw600/img1.ugc.ifeng.com/newugc/20171213/11/wemedia/fbac8ef13d16c1ee058804071a3927d41349c66b_size1817_w2000_h1334.jpg'],
+ 'images': [{'checksum': 'd64e29da914fda0f7e4b9344880da7c3',
+             'path': 'full/732fcbe0b35d8f105ca14e680dbe0e63fa2dc8bd.jpg',
+             'url': 'http://d.ifengimg.com/mw600/img1.ugc.ifeng.com/newugc/20171213/11/wemedia/fbac8ef13d16c1ee058804071a3927d41349c66b_size1817_w2000_h1334.jpg'}]}
+2017-12-13 16:30:04 [scrapy.core.engine] DEBUG: Crawled (200) <GET http://ent.ifeng.com/a/20171213/43012882_0.shtml> (referer: http://ent.ifeng.com/listpage/6/1/list.shtml)
+2017-12-13 16:30:04 [scrapy.pipelines.files] DEBUG: File (uptodate): Downloaded image from <GET http://d.ifengimg.com/mw600/img1.ugc.ifeng.com/newugc/20171213/11/wemedia/5be4221dcbfa1476d9e66c87214ae8882f57bad1_size988_w4676_h3118.jpg> referred in <None>
+2017-12-13 16:30:04 [scrapy.pipelines.files] DEBUG: File (uptodate): Downloaded image from <GET http://d.ifengimg.com/mw600/img1.ugc.ifeng.com/newugc/20171213/11/wemedia/32a16ffc31440ed1e4c89a236a8694607372c03b_size949_w4753_h3173.jpg> referred in <None>
+2017-12-13 16:30:04 [scrapy.core.scraper] DEBUG: Scraped from <200 http://ent.ifeng.com/a/20171213/43012882_0.shtml>
+{'image_urls': ['http://d.ifengimg.com/mw600/img1.ugc.ifeng.com/newugc/20171213/11/wemedia/5be4221dcbfa1476d9e66c87214ae8882f57bad1_size988_w4676_h3118.jpg',
+                'http://d.ifengimg.com/mw600/img1.ugc.ifeng.com/newugc/20171213/11/wemedia/32a16ffc31440ed1e4c89a236a8694607372c03b_size949_w4753_h3173.jpg'],
+ 'images': [{'checksum': '28700df66b364269d7d63b80741f0134',
+             'path': 'full/3b64eb50e91eebb18468ae5bd30875b98ea2da2f.jpg',
+             'url': 'http://d.ifengimg.com/mw600/img1.ugc.ifeng.com/newugc/20171213/11/wemedia/5be4221dcbfa1476d9e66c87214ae8882f57bad1_size988_w4676_h3118.jpg'},
+            {'checksum': '88c9891e7460e29bc55c57ac54a799d5',
+             'path': 'full/d1dd2fcc0b935a69c4ab8b4988dee6947d715737.jpg',
+             'url': 'http://d.ifengimg.com/mw600/img1.ugc.ifeng.com/newugc/20171213/11/wemedia/32a16ffc31440ed1e4c89a236a8694607372c03b_size949_w4753_h3173.jpg'}]}
+2017-12-13 16:30:07 [scrapy.core.engine] DEBUG: Crawled (200) <GET http://ent.ifeng.com/a/20171213/43012917_0.shtml> (referer: http://ent.ifeng.com/listpage/6/1/list.shtml)
+2017-12-13 16:30:07 [scrapy.pipelines.files] DEBUG: File (uptodate): Downloaded image from <GET http://p1.ifengimg.com/cmpp/2017/12/13/13/ecf37603-a135-4d0f-9649-687cba579c4d_size188_w450_h300.jpg> referred in <None>
+2017-12-13 16:30:07 [scrapy.pipelines.files] DEBUG: File (uptodate): Downloaded image from <GET http://p1.ifengimg.com/cmpp/2017/12/13/13/b14739af-38b3-4d0c-819a-dbd2ae61b0e1_size75_w450_h626.jpg> referred in <None>
+2017-12-13 16:30:08 [scrapy.core.scraper] DEBUG: Scraped from <200 http://ent.ifeng.com/a/20171213/43012917_0.shtml>
+{'image_urls': ['http://p1.ifengimg.com/cmpp/2017/12/13/13/ecf37603-a135-4d0f-9649-687cba579c4d_size188_w450_h300.jpg',
+                'http://p1.ifengimg.com/cmpp/2017/12/13/13/b14739af-38b3-4d0c-819a-dbd2ae61b0e1_size75_w450_h626.jpg'],
+ 'images': [{'checksum': 'cdde0ac5df24f4c9a357ff4c63f47657',
+             'path': 'full/f4b671aa357b7ff09693a2eac05bdc3b0dec1eb8.jpg',
+             'url': 'http://p1.ifengimg.com/cmpp/2017/12/13/13/ecf37603-a135-4d0f-9649-687cba579c4d_size188_w450_h300.jpg'},
+            {'checksum': 'cced4a9d6baa038b32fae6596d686ea4',
+             'path': 'full/b1d53058b7e54219fcfb4309239f9b51bd4de2dc.jpg',
+             'url': 'http://p1.ifengimg.com/cmpp/2017/12/13/13/b14739af-38b3-4d0c-819a-dbd2ae61b0e1_size75_w450_h626.jpg'}]}
+2017-12-13 16:30:10 [scrapy.core.engine] DEBUG: Crawled (200) <GET http://ent.ifeng.com/a/20171213/43012919_0.shtml> (referer: http://ent.ifeng.com/listpage/6/1/list.shtml)
+2017-12-13 16:30:10 [scrapy.pipelines.files] DEBUG: File (uptodate): Downloaded image from <GET http://d.ifengimg.com/mw600/img1.ugc.ifeng.com/newugc/20171213/13/wemedia/6a5a9745db924ffa30cbb6a9c9731d07ae7a48b5_size152_w1100_h733.jpeg> referred in <None>
+2017-12-13 16:30:10 [scrapy.pipelines.files] DEBUG: File (uptodate): Downloaded image from <GET http://d.ifengimg.com/mw600/img1.ugc.ifeng.com/newugc/20171213/13/wemedia/76bf29522861b11609c9aabcf4f2a0031709c55c_size348_w1100_h1455.jpeg> referred in <None>
+2017-12-13 16:30:11 [scrapy.core.scraper] DEBUG: Scraped from <200 http://ent.ifeng.com/a/20171213/43012919_0.shtml>
+{'image_urls': ['http://d.ifengimg.com/mw600/img1.ugc.ifeng.com/newugc/20171213/13/wemedia/6a5a9745db924ffa30cbb6a9c9731d07ae7a48b5_size152_w1100_h733.jpeg',
+                'http://d.ifengimg.com/mw600/img1.ugc.ifeng.com/newugc/20171213/13/wemedia/76bf29522861b11609c9aabcf4f2a0031709c55c_size348_w1100_h1455.jpeg'],
+ 'images': [{'checksum': '1649d41280a7124215b67e7e91a3a2a1',
+             'path': 'full/8c9bd4409aef7cd8ba58e1ff2f85f6016e3a7a66.jpg',
+             'url': 'http://d.ifengimg.com/mw600/img1.ugc.ifeng.com/newugc/20171213/13/wemedia/6a5a9745db924ffa30cbb6a9c9731d07ae7a48b5_size152_w1100_h733.jpeg'},
+            {'checksum': '5d3521c9e57e0bf5552679be6d1232ef',
+             'path': 'full/c8933886c45ecc404082d69dbeddb8d5ae0142a2.jpg',
+             'url': 'http://d.ifengimg.com/mw600/img1.ugc.ifeng.com/newugc/20171213/13/wemedia/76bf29522861b11609c9aabcf4f2a0031709c55c_size348_w1100_h1455.jpeg'}]}
+2017-12-13 16:30:15 [scrapy.core.engine] DEBUG: Crawled (200) <GET http://ent.ifeng.com/a/20171213/43012924_0.shtml> (referer: http://ent.ifeng.com/listpage/6/1/list.shtml)
+2017-12-13 16:30:15 [scrapy.core.scraper] ERROR: Spider error processing <GET http://ent.ifeng.com/a/20171213/43012924_0.shtml> (referer: http://ent.ifeng.com/listpage/6/1/list.shtml)
+Traceback (most recent call last):
+  File "c:\users\wzs\appdata\local\programs\python\python36\lib\site-packages\scrapy\utils\defer.py", line 102, in iter_errback
+    yield next(it)
+  File "c:\users\wzs\appdata\local\programs\python\python36\lib\site-packages\scrapy\spidermiddlewares\offsite.py", line 29, in process_spider_output
+    for x in result:
+  File "c:\users\wzs\appdata\local\programs\python\python36\lib\site-packages\scrapy\spidermiddlewares\referer.py", line 339, in <genexpr>
+    return (_set_referer(r) for r in result or ())
+  File "c:\users\wzs\appdata\local\programs\python\python36\lib\site-packages\scrapy\spidermiddlewares\urllength.py", line 37, in <genexpr>
+    return (r for r in result or () if _filter(r))
+  File "c:\users\wzs\appdata\local\programs\python\python36\lib\site-packages\scrapy\spidermiddlewares\depth.py", line 58, in <genexpr>
+    return (r for r in result or () if _filter(r))
+  File "D:\tangxuelin\stutest\scrapyPython3\scrapyPython3\spiders\firstSpider.py", line 36, in content_parse
+    f.write(content)
+UnicodeEncodeError: 'gbk' codec can't encode character '\u2022' in position 699: illegal multibyte sequence
+2017-12-13 16:30:19 [scrapy.core.engine] DEBUG: Crawled (200) <GET http://ent.ifeng.com/a/20171213/43012812_0.shtml> (referer: http://ent.ifeng.com/listpage/6/1/list.shtml)
+2017-12-13 16:30:19 [scrapy.pipelines.files] DEBUG: File (uptodate): Downloaded image from <GET http://d.ifengimg.com/mw600/img1.ugc.ifeng.com/newugc/20171213/10/wemedia/e3542b22bbc0912d22b8d6813348b0bd26451dde_size1299_w1772_h1181.jpeg> referred in <None>
+2017-12-13 16:30:19 [scrapy.pipelines.files] DEBUG: File (uptodate): Downloaded image from <GET http://d.ifengimg.com/mw600/img1.ugc.ifeng.com/newugc/20171213/10/wemedia/caf1e1982650ca6b72bc5c2f3948b65e7836ac12_size1601_w1772_h1181.jpeg> referred in <None>
+2017-12-13 16:30:19 [scrapy.core.scraper] DEBUG: Scraped from <200 http://ent.ifeng.com/a/20171213/43012812_0.shtml>
+{'image_urls': ['http://d.ifengimg.com/mw600/img1.ugc.ifeng.com/newugc/20171213/10/wemedia/e3542b22bbc0912d22b8d6813348b0bd26451dde_size1299_w1772_h1181.jpeg',
+                'http://d.ifengimg.com/mw600/img1.ugc.ifeng.com/newugc/20171213/10/wemedia/caf1e1982650ca6b72bc5c2f3948b65e7836ac12_size1601_w1772_h1181.jpeg'],
+ 'images': [{'checksum': 'b057da3ff3c040fcf808cce081289cd6',
+             'path': 'full/76a10f85596f556765c397e36b58dfd4955d5e7e.jpg',
+             'url': 'http://d.ifengimg.com/mw600/img1.ugc.ifeng.com/newugc/20171213/10/wemedia/e3542b22bbc0912d22b8d6813348b0bd26451dde_size1299_w1772_h1181.jpeg'},
+            {'checksum': '991a14fec4fa0f12a2b2ebcdf589ba37',
+             'path': 'full/5d22062e53bf0d9d21f53872427476428684b2ff.jpg',
+             'url': 'http://d.ifengimg.com/mw600/img1.ugc.ifeng.com/newugc/20171213/10/wemedia/caf1e1982650ca6b72bc5c2f3948b65e7836ac12_size1601_w1772_h1181.jpeg'}]}
+2017-12-13 16:30:22 [scrapy.core.engine] DEBUG: Crawled (200) <GET http://ent.ifeng.com/a/20171213/43012827_0.shtml> (referer: http://ent.ifeng.com/listpage/6/1/list.shtml)
+2017-12-13 16:30:22 [scrapy.core.scraper] ERROR: Spider error processing <GET http://ent.ifeng.com/a/20171213/43012827_0.shtml> (referer: http://ent.ifeng.com/listpage/6/1/list.shtml)
+Traceback (most recent call last):
+  File "c:\users\wzs\appdata\local\programs\python\python36\lib\site-packages\scrapy\utils\defer.py", line 102, in iter_errback
+    yield next(it)
+  File "c:\users\wzs\appdata\local\programs\python\python36\lib\site-packages\scrapy\spidermiddlewares\offsite.py", line 29, in process_spider_output
+    for x in result:
+  File "c:\users\wzs\appdata\local\programs\python\python36\lib\site-packages\scrapy\spidermiddlewares\referer.py", line 339, in <genexpr>
+    return (_set_referer(r) for r in result or ())
+  File "c:\users\wzs\appdata\local\programs\python\python36\lib\site-packages\scrapy\spidermiddlewares\urllength.py", line 37, in <genexpr>
+    return (r for r in result or () if _filter(r))
+  File "c:\users\wzs\appdata\local\programs\python\python36\lib\site-packages\scrapy\spidermiddlewares\depth.py", line 58, in <genexpr>
+    return (r for r in result or () if _filter(r))
+  File "D:\tangxuelin\stutest\scrapyPython3\scrapyPython3\spiders\firstSpider.py", line 35, in content_parse
+    with open(file_path, 'w') as f:
+OSError: [Errno 22] Invalid argument: 'D:/tangxuelin/testfile/spiderfile\\《玩命旅行指南》爆笑杀青 张嘉译闫妮"遇车祸".txt'
+2017-12-13 16:30:25 [scrapy.core.engine] DEBUG: Crawled (200) <GET http://ent.ifeng.com/a/20171213/43012836_0.shtml> (referer: http://ent.ifeng.com/listpage/6/1/list.shtml)
+2017-12-13 16:30:25 [scrapy.pipelines.files] DEBUG: File (uptodate): Downloaded image from <GET http://d.ifengimg.com/mw600/img1.ugc.ifeng.com/newugc/20171213/11/wemedia/c5b9c645a06e16128c93ba65bed069dd5e985ed5_size229_w1000_h667.jpg> referred in <None>
+2017-12-13 16:30:25 [scrapy.pipelines.files] DEBUG: File (uptodate): Downloaded image from <GET http://d.ifengimg.com/mw600/img1.ugc.ifeng.com/newugc/20171213/11/wemedia/ff7a17a3e7ffdeba56ce24d77a0c79755b092aa3_size232_w667_h1000.jpg> referred in <None>
+2017-12-13 16:30:25 [scrapy.core.scraper] DEBUG: Scraped from <200 http://ent.ifeng.com/a/20171213/43012836_0.shtml>
+{'image_urls': ['http://d.ifengimg.com/mw600/img1.ugc.ifeng.com/newugc/20171213/11/wemedia/c5b9c645a06e16128c93ba65bed069dd5e985ed5_size229_w1000_h667.jpg',
+                'http://d.ifengimg.com/mw600/img1.ugc.ifeng.com/newugc/20171213/11/wemedia/ff7a17a3e7ffdeba56ce24d77a0c79755b092aa3_size232_w667_h1000.jpg'],
+ 'images': [{'checksum': 'a8588728d335f5d6c47198c6e58e1a0c',
+             'path': 'full/8151a2bea2b9d41e7b56af8df0ee29a4cdaf6f15.jpg',
+             'url': 'http://d.ifengimg.com/mw600/img1.ugc.ifeng.com/newugc/20171213/11/wemedia/c5b9c645a06e16128c93ba65bed069dd5e985ed5_size229_w1000_h667.jpg'},
+            {'checksum': 'e78c61fef76b4910dcf02782c5cde7f8',
+             'path': 'full/be9589548a0d7fb09a80293266820065399912e3.jpg',
+             'url': 'http://d.ifengimg.com/mw600/img1.ugc.ifeng.com/newugc/20171213/11/wemedia/ff7a17a3e7ffdeba56ce24d77a0c79755b092aa3_size232_w667_h1000.jpg'}]}
+2017-12-13 16:30:29 [scrapy.core.engine] DEBUG: Crawled (200) <GET http://ent.ifeng.com/a/20171213/43012840_0.shtml> (referer: http://ent.ifeng.com/listpage/6/1/list.shtml)
+2017-12-13 16:30:29 [scrapy.pipelines.files] DEBUG: File (uptodate): Downloaded image from <GET http://p0.ifengimg.com/a/2017_50/0765070a1ea7650_size35_w620_h326.jpg> referred in <None>
+2017-12-13 16:30:29 [scrapy.pipelines.files] DEBUG: File (uptodate): Downloaded image from <GET http://img5.mtime.cn/CMS/News/2017/12/13/082413.72738756_620X620.jpg> referred in <None>
+2017-12-13 16:30:29 [scrapy.pipelines.files] DEBUG: File (uptodate): Downloaded image from <GET http://img5.mtime.cn/CMS/News/2017/12/13/092301.84082600_620X620.jpg> referred in <None>
+2017-12-13 16:30:30 [scrapy.core.scraper] DEBUG: Scraped from <200 http://ent.ifeng.com/a/20171213/43012840_0.shtml>
+{'image_urls': ['http://p0.ifengimg.com/a/2017_50/0765070a1ea7650_size35_w620_h326.jpg',
+                'http://img5.mtime.cn/CMS/News/2017/12/13/082413.72738756_620X620.jpg',
+                'http://img5.mtime.cn/CMS/News/2017/12/13/092301.84082600_620X620.jpg'],
+ 'images': [{'checksum': '6c7f9c37372f828c7683897702d6aa40',
+             'path': 'full/808d19359c691a5f4ce76c15175bc0f7f165edf4.jpg',
+             'url': 'http://p0.ifengimg.com/a/2017_50/0765070a1ea7650_size35_w620_h326.jpg'},
+            {'checksum': 'f51fff89fb857493e8f06764f09dc9e2',
+             'path': 'full/f0234996a19297821e168d25faeedeb22574c79e.jpg',
+             'url': 'http://img5.mtime.cn/CMS/News/2017/12/13/082413.72738756_620X620.jpg'},
+            {'checksum': '1988b4007b8801dd669aeace2e5a10cf',
+             'path': 'full/9b447fe4784921af942f82bb5ff917bbf4d72a5d.jpg',
+             'url': 'http://img5.mtime.cn/CMS/News/2017/12/13/092301.84082600_620X620.jpg'}]}
+2017-12-13 16:30:32 [scrapy.core.engine] DEBUG: Crawled (200) <GET http://ent.ifeng.com/a/20171213/43012843_0.shtml> (referer: http://ent.ifeng.com/listpage/6/1/list.shtml)
+2017-12-13 16:30:32 [scrapy.pipelines.files] DEBUG: File (uptodate): Downloaded image from <GET http://p2.ifengimg.com/a/2017_50/27c744e8481b8e4_size50_w500_h333.jpg> referred in <None>
+2017-12-13 16:30:32 [scrapy.pipelines.files] DEBUG: File (uptodate): Downloaded image from <GET http://p1.ifengimg.com/a/2017_50/f259634a79d99c4_size75_w333_h500.jpg> referred in <None>
+2017-12-13 16:30:33 [scrapy.core.scraper] DEBUG: Scraped from <200 http://ent.ifeng.com/a/20171213/43012843_0.shtml>
+{'image_urls': ['http://p2.ifengimg.com/a/2017_50/27c744e8481b8e4_size50_w500_h333.jpg',
+                'http://p1.ifengimg.com/a/2017_50/f259634a79d99c4_size75_w333_h500.jpg'],
+ 'images': [{'checksum': 'e4218b41079fbbcb50c278e71bc15c3d',
+             'path': 'full/a8571941a911cc2e875c0bd747423ee4e7fb4e08.jpg',
+             'url': 'http://p2.ifengimg.com/a/2017_50/27c744e8481b8e4_size50_w500_h333.jpg'},
+            {'checksum': 'da8de9b9d089de0e49f557169bbe78ea',
+             'path': 'full/4c6173eab554f18550b15d38331bf09ef5577496.jpg',
+             'url': 'http://p1.ifengimg.com/a/2017_50/f259634a79d99c4_size75_w333_h500.jpg'}]}
+2017-12-13 16:30:37 [scrapy.core.engine] DEBUG: Crawled (200) <GET http://ent.ifeng.com/a/20171213/43012861_0.shtml> (referer: http://ent.ifeng.com/listpage/6/1/list.shtml)
+2017-12-13 16:30:37 [scrapy.pipelines.files] DEBUG: File (uptodate): Downloaded image from <GET http://d.ifengimg.com/mw600/img1.ugc.ifeng.com/newugc/20171213/11/wemedia/72e927e993f46842ecdea6d4a5712b39a59d29f2_size279_w1000_h667.jpg> referred in <None>
+2017-12-13 16:30:37 [scrapy.pipelines.files] DEBUG: File (uptodate): Downloaded image from <GET http://d.ifengimg.com/mw600/img1.ugc.ifeng.com/newugc/20171213/11/wemedia/8b4db4f2ca497fab602a40838f257ea981c8d83b_size248_w1186_h1368.jpeg> referred in <None>
+2017-12-13 16:30:37 [scrapy.core.scraper] DEBUG: Scraped from <200 http://ent.ifeng.com/a/20171213/43012861_0.shtml>
+{'image_urls': ['http://d.ifengimg.com/mw600/img1.ugc.ifeng.com/newugc/20171213/11/wemedia/72e927e993f46842ecdea6d4a5712b39a59d29f2_size279_w1000_h667.jpg',
+                'http://d.ifengimg.com/mw600/img1.ugc.ifeng.com/newugc/20171213/11/wemedia/8b4db4f2ca497fab602a40838f257ea981c8d83b_size248_w1186_h1368.jpeg'],
+ 'images': [{'checksum': 'e8f280c12bf6891e246d6049203f9494',
+             'path': 'full/4bb8cbbcd0f6c8270a76a47928ca696c52e80f3d.jpg',
+             'url': 'http://d.ifengimg.com/mw600/img1.ugc.ifeng.com/newugc/20171213/11/wemedia/72e927e993f46842ecdea6d4a5712b39a59d29f2_size279_w1000_h667.jpg'},
+            {'checksum': 'e210e26ddbb7fa593b3ac97aa13be555',
+             'path': 'full/b7dbf6cbae4dfc1e53d8875c00e4753bde07cde8.jpg',
+             'url': 'http://d.ifengimg.com/mw600/img1.ugc.ifeng.com/newugc/20171213/11/wemedia/8b4db4f2ca497fab602a40838f257ea981c8d83b_size248_w1186_h1368.jpeg'}]}
+2017-12-13 16:30:40 [scrapy.core.engine] DEBUG: Crawled (200) <GET http://ent.ifeng.com/a/20171213/43012774_0.shtml> (referer: http://ent.ifeng.com/listpage/6/1/list.shtml)
+2017-12-13 16:30:41 [scrapy.pipelines.files] DEBUG: File (uptodate): Downloaded image from <GET http://p3.ifengimg.com/a/2017_50/c80b9f2bf9eb153_size27_w436_h238.jpg> referred in <None>
+2017-12-13 16:30:41 [scrapy.pipelines.files] DEBUG: File (uptodate): Downloaded image from <GET http://p3.ifengimg.com/a/2017_50/1c265290288318b_size12_w627_h265.jpg> referred in <None>
+2017-12-13 16:30:41 [scrapy.core.scraper] DEBUG: Scraped from <200 http://ent.ifeng.com/a/20171213/43012774_0.shtml>
+{'image_urls': ['http://p3.ifengimg.com/a/2017_50/c80b9f2bf9eb153_size27_w436_h238.jpg',
+                'http://p3.ifengimg.com/a/2017_50/1c265290288318b_size12_w627_h265.jpg'],
+ 'images': [{'checksum': '1a4c99b5824caa2e0ebf2cd602452419',
+             'path': 'full/7ef02c86c7873036e2c80d66aa381b15552ba910.jpg',
+             'url': 'http://p3.ifengimg.com/a/2017_50/c80b9f2bf9eb153_size27_w436_h238.jpg'},
+            {'checksum': '8f9edc87cb50684d47cce789879da837',
+             'path': 'full/273e53b794793cf1b1e2bcf78309ee0fa490bb3f.jpg',
+             'url': 'http://p3.ifengimg.com/a/2017_50/1c265290288318b_size12_w627_h265.jpg'}]}
+2017-12-13 16:30:45 [scrapy.core.engine] DEBUG: Crawled (200) <GET http://ent.ifeng.com/a/20171213/43012783_0.shtml> (referer: http://ent.ifeng.com/listpage/6/1/list.shtml)
+2017-12-13 16:30:45 [scrapy.pipelines.files] DEBUG: File (uptodate): Downloaded image from <GET http://p3.ifengimg.com/cmpp/2017/12/13/09/b7f8a3f8-ef93-4f0a-8c00-6bf9d764910a_size165_w450_h300.jpg> referred in <None>
+2017-12-13 16:30:45 [scrapy.pipelines.files] DEBUG: File (uptodate): Downloaded image from <GET http://p2.ifengimg.com/cmpp/2017/12/13/09/f1e39960-79c3-4cb7-84a1-747dbd9cc625_size126_w450_h630.jpg> referred in <None>
+2017-12-13 16:30:45 [scrapy.core.scraper] DEBUG: Scraped from <200 http://ent.ifeng.com/a/20171213/43012783_0.shtml>
+{'image_urls': ['http://p3.ifengimg.com/cmpp/2017/12/13/09/b7f8a3f8-ef93-4f0a-8c00-6bf9d764910a_size165_w450_h300.jpg',
+                'http://p2.ifengimg.com/cmpp/2017/12/13/09/f1e39960-79c3-4cb7-84a1-747dbd9cc625_size126_w450_h630.jpg'],
+ 'images': [{'checksum': '0476ed2b3cbd0e782ecf673557be2af1',
+             'path': 'full/631a438a9353f3189afb53ecd5dce5d04009941c.jpg',
+             'url': 'http://p3.ifengimg.com/cmpp/2017/12/13/09/b7f8a3f8-ef93-4f0a-8c00-6bf9d764910a_size165_w450_h300.jpg'},
+            {'checksum': '43ad2a073614234f6871a31816058c44',
+             'path': 'full/2d3b1cf51d0a2b24144e00a7ba4e09c32f498972.jpg',
+             'url': 'http://p2.ifengimg.com/cmpp/2017/12/13/09/f1e39960-79c3-4cb7-84a1-747dbd9cc625_size126_w450_h630.jpg'}]}
+2017-12-13 16:30:46 [scrapy.extensions.logstats] INFO: Crawled 17 pages (at 17 pages/min), scraped 12 items (at 12 items/min)
+2017-12-13 16:30:49 [scrapy.core.engine] DEBUG: Crawled (200) <GET http://ent.ifeng.com/a/20171213/43012805_0.shtml> (referer: http://ent.ifeng.com/listpage/6/1/list.shtml)
+2017-12-13 16:30:49 [scrapy.pipelines.files] DEBUG: File (uptodate): Downloaded image from <GET http://d.ifengimg.com/mw600/img1.ugc.ifeng.com/newugc/20171213/10/wemedia/d8dc836f6f28f89baa84eb5cef42630c2d884a83_size1844_w1987_h1016.jpg> referred in <None>
+2017-12-13 16:30:49 [scrapy.pipelines.files] DEBUG: File (uptodate): Downloaded image from <GET http://d.ifengimg.com/mw600/img1.ugc.ifeng.com/newugc/20171213/10/wemedia/b9666a405b351297db8196a5f0bcae226a2e4d8a_size668_w1920_h1080.jpg> referred in <None>
+2017-12-13 16:30:49 [scrapy.core.scraper] DEBUG: Scraped from <200 http://ent.ifeng.com/a/20171213/43012805_0.shtml>
+{'image_urls': ['http://d.ifengimg.com/mw600/img1.ugc.ifeng.com/newugc/20171213/10/wemedia/d8dc836f6f28f89baa84eb5cef42630c2d884a83_size1844_w1987_h1016.jpg',
+                'http://d.ifengimg.com/mw600/img1.ugc.ifeng.com/newugc/20171213/10/wemedia/b9666a405b351297db8196a5f0bcae226a2e4d8a_size668_w1920_h1080.jpg'],
+ 'images': [{'checksum': '02685d8cdb30297c86e03d1115a53733',
+             'path': 'full/e5474559103ee60a4c10da6ab42482daa68d486f.jpg',
+             'url': 'http://d.ifengimg.com/mw600/img1.ugc.ifeng.com/newugc/20171213/10/wemedia/d8dc836f6f28f89baa84eb5cef42630c2d884a83_size1844_w1987_h1016.jpg'},
+            {'checksum': 'aff10299e8691f828dbdb85d3ca685c8',
+             'path': 'full/3c2a78a5c7c8fd7e0dc234708ec969c863a08975.jpg',
+             'url': 'http://d.ifengimg.com/mw600/img1.ugc.ifeng.com/newugc/20171213/10/wemedia/b9666a405b351297db8196a5f0bcae226a2e4d8a_size668_w1920_h1080.jpg'}]}
+2017-12-13 16:30:49 [scrapy.core.engine] INFO: Closing spider (finished)
+2017-12-13 16:30:49 [scrapy.statscollectors] INFO: Dumping Scrapy stats:
+{'downloader/request_bytes': 5093,
+ 'downloader/request_count': 18,
+ 'downloader/request_method_count/GET': 18,
+ 'downloader/response_bytes': 806679,
+ 'downloader/response_count': 18,
+ 'downloader/response_status_count/200': 18,
+ 'file_count': 26,
+ 'file_status_count/uptodate': 26,
+ 'finish_reason': 'finished',
+ 'finish_time': datetime.datetime(2017, 12, 13, 8, 30, 49, 372238),
+ 'item_scraped_count': 13,
+ 'log_count/DEBUG': 58,
+ 'log_count/ERROR': 2,
+ 'log_count/INFO': 8,
+ 'request_depth_max': 2,
+ 'response_received_count': 18,
+ 'scheduler/dequeued': 17,
+ 'scheduler/dequeued/memory': 17,
+ 'scheduler/enqueued': 17,
+ 'scheduler/enqueued/memory': 17,
+ 'spider_exceptions/OSError': 1,
+ 'spider_exceptions/UnicodeEncodeError': 1,
+ 'start_time': datetime.datetime(2017, 12, 13, 8, 29, 46, 166712)}
+2017-12-13 16:30:49 [scrapy.core.engine] INFO: Spider closed (finished)

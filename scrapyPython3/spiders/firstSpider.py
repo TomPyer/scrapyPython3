@@ -2,6 +2,7 @@
 import scrapy
 import os
 from scrapy import Selector, Request
+from scrapyPython3.items import FirstSpiderItem
 
 
 class FirstspiderSpider(scrapy.Spider):
@@ -27,7 +28,13 @@ class FirstspiderSpider(scrapy.Spider):
     def content_parse(self, response):
         sel = Selector(response)
         meta = response.meta
+        item = FirstSpiderItem()
         content = '\n'.join(sel.xpath('//div[@id="main_content"]/p/text()').extract())
+        image_url = sel.xpath('//div[@id="main_content"]/p[@class="detailPic"]/img/@src').extract()
         file_path = os.path.join('D:/tangxuelin/testfile/spiderfile', (meta['title']+'.txt'))
         with open(file_path, 'w') as f:
             f.write(content)
+        if image_url:
+            item['image_urls'] = image_url
+            yield item
+

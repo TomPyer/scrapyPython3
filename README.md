@@ -127,3 +127,30 @@ print(response.body)
 以及content读取时,应该使用//开头,才能确保从根目录开始查找.
 
 到现在这个commit,是可以成功运行并将电影分类下的新闻标题和内容获取下来.
+
+### 三、扩大需求(图片下载)
+嗯..光是拿个标题和文章内容似乎也不够有表现力...试试把剧照给弄下来
+兵马未动粮草先行
+先把settings.py配置好,需要做的有:
+1、开启'scrapy.pipelines.images.ImagesPipeline':5,
+2、配置images相关属性<br>
+这两个是最基础的，后面有需要再额外添加
+
+然后把item定义好
+items.py
+```python
+class FirstSpiderItem(scrapy.Item):
+    images = scrapy.Field()
+    images_urls = scrapy.Field()
+    images_paths = scrapy.Field()
+    pass
+```
+再把爬虫文件中添加一句获取图片Url的xpath表达式以及赋值给item并yield
+```python
+image_url = sel.xpath('//div[@id="main_content"]/p[@class="detailPic"]/img/@src').extract()
+item = FirstSpiderItem()
+    if image_url:
+        item['image_urls'] = image_url
+        yield item
+```
+一个最基础的图片下载功能就完成了.
