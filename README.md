@@ -109,3 +109,10 @@ IndexError: list index out of range
 ```
 很常见的一个问题,部分情况下xpath并不一定能取值成功(即标签不存在或内容不存在的情况下)
 如果取值失败  .extract() 方法返回的是一个空列表,使用[0]取值则会触发IndexError错误.
+
+嗯...好像还是有问题,好吧,现在这样来,跟我做
+```python
+scrapy shell http://ent.ifeng.com/listpage/6/1/list.shtml
+```
+以命令行形式加载指定url内容,当然,是由scrapy解析后的
+进入命令行后,基本上跟一个ipython窗口一样,但是他加载了scrapy相关模块可供使用,然后就可以在里面为所欲为了
