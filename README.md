@@ -94,3 +94,8 @@ python curmain.py -s scrapyPython3 firstSpider     # -s 为启动命令, 参数�
 python curmain.py -c scrapyPython3 SpiderID     # -c 关闭爬虫命令, 参数为项目名称和爬虫ID
 ```
 其他相关操作可以使用 -h 进行查看文本输出.
+
+执行启动命令后,会在项目的根目录下产生logs文件夹,根据项目,爬虫,job_id区分各个爬虫的日志文件
+并在curlApi目录下产生job_id.txt文件,方便查找job_id终止爬虫或查找对应日志文件.
+
+根据logs下产生的日志文件对spider进行调试修改
