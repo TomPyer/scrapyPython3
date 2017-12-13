@@ -132,7 +132,7 @@ print(response.body)
 嗯..光是拿个标题和文章内容似乎也不够有表现力...试试把剧照给弄下来
 兵马未动粮草先行
 先把settings.py配置好,需要做的有:
-1、开启'scrapy.pipelines.images.ImagesPipeline':5,
+1、开启'scrapy.pipelines.images.ImagesPipeline':5,<br>
 2、配置images相关属性<br>
 这两个是最基础的，后面有需要再额外添加
 
@@ -154,3 +154,30 @@ item = FirstSpiderItem()
         yield item
 ```
 一个最基础的图片下载功能就完成了.
+漏了一段
+```python
+class firstSpiderImagePipeline(ImagesPipeline):
+    default_headers = {
+        'accept': 'image/webp,image/*,*/*;q=0.8',
+        'accept-encoding': 'gzip, deflate, sdch, br',
+        'accept-language': 'zh-CN,zh;q=0.8,en;q=0.6',
+        'cookie': 'bid=yQdC/AzTaCw',
+        'referer': 'https://www.douban.com/photos/photo/2370443040/',
+        'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36',
+    }
+
+    def get_media_requests(self, item, info):
+        # ImagePipeline根据image_urls中指定的url进行爬取，可以通过get_media_requests为每个url生成一个Request
+        for image_url in item['image_urls']:
+            self.default_headers['referer'] = image_url
+            yield Request(image_url, headers=self.default_headers)
+
+    def item_completed(self, results, item, info):
+        # 图片下载完毕后，处理结果会以二元组的方式返回给item_completed()函数
+        image_paths = [x['path'] for ok, x in results if ok]
+        if not image_paths:
+            raise DropItem("Item contains no images")
+        item['image_paths'] = image_paths
+        return item
+```
+在pipelines.py文件中添加该自定义图片下载pipeline
