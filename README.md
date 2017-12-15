@@ -183,16 +183,25 @@ class firstSpiderImagePipeline(ImagesPipeline):
 在pipelines.py文件中添加该自定义图片下载pipeline
 
 ### 爬取动态页面(scrapy_splash)
-现在很多网站都采用js动态加载的模式来加载页面数据,具体原因可能是比较流行吧
-面对js动态加载的数据,spider在初次访问时并无法获取到所需要的内容,这时候就需要一个中间模块来代为执行js函数加载所需要的内容
-这里我用到的是scrapy_splash,原因嘛,简单,易用(基础功能使用并不复杂)
-Splash是一个Javascript渲染服务。它是一个实现了HTTP API的轻量级浏览器，Splash是用Python实现的，同时使用Twisted和QT。Twisted（QT）用来让服务具有异步处理能力，以发挥webkit的并发能力。
-首先,我们需要拥有docker(
-Docker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。
-容器是完全使用沙箱机制，相互之间不会有任何接口。)<br>
+
+现在很多网站都采用js动态加载的模式来加载页面数据,具体原因可能是比较流行吧<br>
+
+面对js动态加载的数据,spider在初次访问时并无法获取到所需要的内容,这时候就需要一个中间模块来代为执行js函数加载所需要的内容<br>
+
+这里我用到的是scrapy_splash,原因嘛,简单,易用(基础功能使用并不复杂)<br>
+
+Splash是一个Javascript渲染服务。它是一个实现了HTTP API的轻量级浏览器,<br>
+
+Splash是用Python实现的,同时使用Twisted和QT.Twisted（QT）用来让服务具有异步处理能力,以发挥webkit的并发能力.<br>
+
+首先,我们需要拥有docker(<br>
+    Docker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的容器中,然后发布到任何流行的 Linux 机器上,也可以实现虚拟化的.容器是完全使用沙箱机制,相互之间不会有任何接口.)<br>
+    
 这里是我自己的docker安装过程以及一些遇到的小问题[docker-简书](http://www.jianshu.com/p/75d26f00ddb1)<br>
+
 不出意外应该是很容易就安装好了的,最多受网速限制慢一些.<br>
-然后需要就是需要安装scrapy_splash了
+
+然后需要就是需要安装scrapy_splash了<br>
 ```python
 pip install scrapy_splash
 ```
@@ -223,8 +232,10 @@ HTTPCACHE_STORAGE = 'scrapy_splash.SplashAwareFSCacheStorage'   # 启用scrapy_s
 ```
 
 上面这些配置根据个人需要做修改或注释掉部分不需要的配置.<br>
+
 到这里,准备和配置工作基本做完了,接下来只需要在写爬虫的时候稍微做些改动就可以了.<br>
-比如:修改start_request()函数,使用SplashRequest来代替默认的Request
+
+比如:修改start_request()函数,使用SplashRequest来代替默认的Request<br>
 ```python
     from scrapy_splash import SplashRequest
 
@@ -233,5 +244,7 @@ HTTPCACHE_STORAGE = 'scrapy_splash.SplashAwareFSCacheStorage'   # 启用scrapy_s
             yield SplashRequest(url, self.parse)
 ```
 这样就能让url都以SplashRequest对象的方式传递下去,交给splash服务进行js渲染工作.<br>
-诶嘿嘿嘿嘿,现在可以直接在Selecotr对象的xpath或css方法中去获取页面上js加载出来的数据了 :),网站就跟在你面前裸奔一样~~
+
+诶嘿嘿嘿嘿,现在可以直接在Selecotr对象的xpath或css方法中去获取页面上js加载出来的数据了 :),网站就跟在你面前裸奔一样<br>
+
 tips: js渲染也仅仅是加载默认那部分,如果是需要滚动页面进行额外获取的话,需要仔细去查看滚动鼠标时网页在偷偷的执行了什么哦!
