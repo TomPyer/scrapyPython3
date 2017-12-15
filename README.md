@@ -207,8 +207,8 @@ pip install scrapy_splash
 ```
 <br>
 docker准备好了之后呢,需要把scrapy_splash服务给运行起来<br>
-```shell
-docker pull scrapinghub/splash          # 将scrapy_splash镜像pull到docker环境
+```python
+docker pull scrapinghub/splash          # 将scrapy_splash镜像pull到docker环境
 docker run 8050:8050 scrapinghub/splash     # 将scrapy_splash服务运行在8050端口
 ```
 到这里,一个运行了scrapy_splash服务的docker环境已经搭建完成<br>
