@@ -33,10 +33,10 @@ DOWNLOAD_DELAY = 3
 #CONCURRENT_REQUESTS_PER_IP = 16
 
 # Disable cookies (enabled by default)
-#COOKIES_ENABLED = False
+COOKIES_ENABLED = False
 
 # Disable Telnet Console (enabled by default)
-#TELNETCONSOLE_ENABLED = False
+# TELNETCONSOLE_ENABLED = False
 
 # Override the default request headers:
 #DEFAULT_REQUEST_HEADERS = {
@@ -46,15 +46,19 @@ DOWNLOAD_DELAY = 3
 
 # Enable or disable spider middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
-#SPIDER_MIDDLEWARES = {
-#    'scrapyPython3.middlewares.Scrapypython3SpiderMiddleware': 543,
-#}
+SPIDER_MIDDLEWARES = {
+   # 'scrapyPython3.middlewares.Scrapypython3SpiderMiddleware': 543,
+    'scrapy_splash.SplashDeduplicateArgsMiddleware': 100,
+}
 
 # Enable or disable downloader middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
-#DOWNLOADER_MIDDLEWARES = {
-#    'scrapyPython3.middlewares.MyCustomDownloaderMiddleware': 543,
-#}
+DOWNLOADER_MIDDLEWARES = {
+   # 'scrapyPython3.middlewares.MyCustomDownloaderMiddleware': 543,
+    'scrapy_splash.SplashCookiesMiddleware': 723,           # 添加SplashMiddleware下载中间件
+    'scrapy_splash.SplashMiddleware': 725,
+    'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware': 810,
+}
 
 # Enable or disable extensions
 # See http://scrapy.readthedocs.org/en/latest/topics/extensions.html
@@ -66,7 +70,7 @@ DOWNLOAD_DELAY = 3
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
    # 'scrapyPython3.pipelines.Scrapypython3Pipeline': 300,
-    'scrapy.pipelines.images.ImagesPipeline':5,
+    'scrapy.pipelines.images.ImagesPipeline': 5,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -84,13 +88,17 @@ ITEM_PIPELINES = {
 
 # Enable and configure HTTP caching (disabled by default)
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html#httpcache-middleware-settings
-#HTTPCACHE_ENABLED = True
-#HTTPCACHE_EXPIRATION_SECS = 0
-#HTTPCACHE_DIR = 'httpcache'
-#HTTPCACHE_IGNORE_HTTP_CODES = []
-#HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+HTTPCACHE_ENABLED = True
+HTTPCACHE_EXPIRATION_SECS = 0
+HTTPCACHE_DIR = 'httpcache'
+HTTPCACHE_IGNORE_HTTP_CODES = []
+HTTPCACHE_STORAGE = 'scrapy_splash.SplashAwareFSCacheStorage'
 
 # image setting
 # 配置保存本地的地址/过期天数
 IMAGES_STORE = 'D:/tangxuelin/testfile/images'
 IMAGES_EXPIRES = 90
+
+# scrapy_splash
+SPLASH_URL = 'http://192.168.99.100:8050'
+DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
