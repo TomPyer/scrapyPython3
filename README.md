@@ -1,6 +1,6 @@
 # scrapyPython3
-### 这是对于上一个项目的更细化教程(或者说是笔记..) 
-#### 一、基本工作
+## 这是对于上一个项目的更细化教程(或者说是笔记..) 
+### 一、基本工作
 第一次提交的内容是由
 ```python
 scrapy startproject projcetName
@@ -60,7 +60,7 @@ Server response (200):
 ```
 显示大概是这样就算是完成发布成功了.
 
-#### 二、第一个爬虫
+### 二、第一个爬虫
 先拿一些基础的网页来展示功能效果
 比如[凤凰娱乐新闻](http://ent.ifeng.com/)
 也省的再创建一个爬虫了,直接对firstSpider进行修改使用
@@ -182,7 +182,7 @@ class firstSpiderImagePipeline(ImagesPipeline):
 ```
 在pipelines.py文件中添加该自定义图片下载pipeline
 
-### 爬取动态页面(scrapy_splash)
+### 四、爬取动态页面(scrapy_splash)
 
 现在很多网站都采用js动态加载的模式来加载页面数据,具体原因可能是比较流行吧<br>
 
@@ -203,17 +203,20 @@ Splash是用Python实现的,同时使用Twisted和QT.Twisted（QT）用来让服
 
 然后需要就是需要安装scrapy_splash了<br>
 ```python
+
 pip install scrapy_splash
 ```
 <br>
 docker准备好了之后呢,需要把scrapy_splash服务给运行起来<br>
 ```python
+
 docker pull scrapinghub/splash          # 将scrapy_splash镜像pull到docker环境
 docker run 8050:8050 scrapinghub/splash     # 将scrapy_splash服务运行在8050端口
 ```
 到这里,一个运行了scrapy_splash服务的docker环境已经搭建完成<br>
 然后在项目目录下的settings.py中添加<br>
 ```python
+
 SPLASH_URL = 'http://192.168.99.100:8050'       # 这是我的dcoker的地址和scrapy_splash服务端口
 
 DOWNLOADER_MIDDLEWARES = {
@@ -237,6 +240,7 @@ HTTPCACHE_STORAGE = 'scrapy_splash.SplashAwareFSCacheStorage'   # 启用scrapy_s
 
 比如:修改start_request()函数,使用SplashRequest来代替默认的Request<br>
 ```python
+
     from scrapy_splash import SplashRequest
 
     def start_requests(self):
