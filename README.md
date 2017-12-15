@@ -211,10 +211,14 @@ docker准备好了之后呢,需要把scrapy_splash服务给运行起来<br>
 ```python
 
 docker pull scrapinghub/splash          # 将scrapy_splash镜像pull到docker环境
+
 docker run 8050:8050 scrapinghub/splash     # 将scrapy_splash服务运行在8050端口
+
 ```
 到这里,一个运行了scrapy_splash服务的docker环境已经搭建完成<br>
+
 然后在项目目录下的settings.py中添加<br>
+
 ```python
 
 SPLASH_URL = 'http://192.168.99.100:8050'       # 这是我的dcoker的地址和scrapy_splash服务端口
