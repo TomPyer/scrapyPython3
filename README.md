@@ -203,18 +203,17 @@ Splash是用Python实现的,同时使用Twisted和QT.Twisted（QT）用来让服
 
 然后需要就是需要安装scrapy_splash了<br>
 ```python
-
 pip install scrapy_splash
 ```
-<br>
-docker准备好了之后呢,需要把scrapy_splash服务给运行起来<br>
-```python
 
+docker准备好了之后呢,需要把scrapy_splash服务给运行起来<br>
+
+```python
 docker pull scrapinghub/splash          # 将scrapy_splash镜像pull到docker环境
 
 docker run 8050:8050 scrapinghub/splash     # 将scrapy_splash服务运行在8050端口
-
 ```
+
 到这里,一个运行了scrapy_splash服务的docker环境已经搭建完成<br>
 
 然后在项目目录下的settings.py中添加<br>
@@ -236,6 +235,7 @@ SPIDER_MIDDLEWARES = {
 DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'        # 设置scrapy_splash去重类
 
 HTTPCACHE_STORAGE = 'scrapy_splash.SplashAwareFSCacheStorage'   # 启用scrapy_splash缓存
+
 ```
 
 上面这些配置根据个人需要做修改或注释掉部分不需要的配置.<br>
