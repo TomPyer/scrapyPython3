@@ -211,7 +211,7 @@ docker准备好了之后呢,需要把scrapy_splash服务给运行起来<br>
 ```python
 docker pull scrapinghub/splash          # 将scrapy_splash镜像pull到docker环境
 
-docker run 8050:8050 scrapinghub/splash     # 将scrapy_splash服务运行在8050端口
+docker run -p 8050:8050 scrapinghub/splash     # 将scrapy_splash服务运行在8050端口
 ```
 
 到这里,一个运行了scrapy_splash服务的docker环境已经搭建完成<br>
@@ -257,4 +257,25 @@ HTTPCACHE_STORAGE = 'scrapy_splash.SplashAwareFSCacheStorage'   # 启用scrapy_s
 
 tips: js渲染也仅仅是加载默认那部分,如果是需要滚动页面进行额外获取的话,需要仔细去查看滚动鼠标时网页在偷偷的执行了什么哦!
 
+## 五、实战演练
 今天的预告：完成一个动态爬虫,从页面到入库的整个过程.
+
+有请今天的受害者[知乎](www.zhihu.com)<br>
+首先使用了
+```python
+scrapy shell www.zhihu.com
+```
+简单测试,发现事情果然没有这么简单<br>
+接着
+```python
+scrapy genspider zhihu www.zhihu.com    # 创建zhihu爬虫
+```
+然后研究一下知乎的登录页面的具体流程<br>
+首先,我们肯定是使用帐号密码登录,www.zhihu.com访问默认是app扫码登录,需要加上'#signin',才能切换为帐号密码登录<br>
+然后,使用错误的帐号密码查看post请求去向(正确的你就登录成功然后跳转链接了,浏览器F12跳转链接后会刷新Network信息)<br>
+就能发现post请求url为('https://www.zhihu.com/login/phone_num')<br>
+其中有参数['_xsrf', 'phone_num', 'password', 'captcha_type']<br>
+'_xsrf':  请求页面中携带的一个验证码<br>
+'phone_num', 'password' : 看字面意思就可以<br>
+'captcha_type':  验证码类型,默认是cn<br>
+好的,大概准备好了,可以尝试一波<br>
