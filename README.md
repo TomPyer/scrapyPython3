@@ -210,10 +210,10 @@ SPLASH_URL = 'http://192.168.99.100:8050'       # 这是我的dcoker的地址和
 DOWNLOADER_MIDDLEWARES = {
 'scrapy_splash.SplashCookiesMiddleware': 723,           # 添加SplashMiddleware下载中间件
 'scrapy_splash.SplashMiddleware': 725,
-'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware': 810,
+'scrapy.downloadermid
+SPIDER_MIDDLEWARES = {dlewares.httpcompression.HttpCompressionMiddleware': 810,
 }
 
-SPIDER_MIDDLEWARES = {
 'scrapy_splash.SplashDeduplicateArgsMiddleware': 100,       # 启用SplashDeduplicateArgsMiddleware爬虫中间件
 }
 
@@ -235,3 +235,5 @@ HTTPCACHE_STORAGE = 'scrapy_splash.SplashAwareFSCacheStorage'   # 启用scrapy_s
 这样就能让url都以SplashRequest对象的方式传递下去,交给splash服务进行js渲染工作.<br>
 诶嘿嘿嘿嘿,现在可以直接在Selecotr对象的xpath或css方法中去获取页面上js加载出来的数据了 :),网站就跟在你面前裸奔一样~~
 tips: js渲染也仅仅是加载默认那部分,如果是需要滚动页面进行额外获取的话,需要仔细去查看滚动鼠标时网页在偷偷的执行了什么哦!
+
+今天的预告：完成一个动态爬虫,从页面到入库的整个过程.
