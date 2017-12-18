@@ -307,5 +307,6 @@ scrapy genspider zhihu www.zhihu.com    # 创建zhihu爬虫
 
     3, 嗯...到这里,如果成功的话,应该会重定向到www.zhihu.com首页,并根据用户属性展示相关推荐文章<br>
 
-好,琢磨完了！, 写代码吧！
+好,琢磨完了！, 写代码吧！<br>
 
+由于使用的scrapyd运行爬虫,input语句在代码中似乎不起作用,正在想别的办法..
