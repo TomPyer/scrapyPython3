@@ -271,11 +271,41 @@ scrapy shell www.zhihu.com
 scrapy genspider zhihu www.zhihu.com    # 创建zhihu爬虫
 ```
 然后研究一下知乎的登录页面的具体流程<br>
-首先,我们肯定是使用帐号密码登录,www.zhihu.com访问默认是app扫码登录,需要加上'#signin',才能切换为帐号密码登录<br>
+
+首先,我们肯定是使用帐号密码登录,'www.zhihu.com'访问默认是app扫码登录,需要加上'#signin',才能切换为帐号密码登录<br>
+
 然后,使用错误的帐号密码查看post请求去向(正确的你就登录成功然后跳转链接了,浏览器F12跳转链接后会刷新Network信息)<br>
+
 就能发现post请求url为('https://www.zhihu.com/login/phone_num')<br>
+
 其中有参数['_xsrf', 'phone_num', 'password', 'captcha_type']<br>
+```
 '_xsrf':  请求页面中携带的一个验证码<br>
 'phone_num', 'password' : 看字面意思就可以<br>
 'captcha_type':  验证码类型,默认是cn<br>
+```
 好的,大概准备好了,可以尝试一波<br>
+
+很好,第一次尝试失败了,看看是为什么<br>
+
+返回内容是验证码错误, 可是在登录页面并没有发现填写验证码的地方啊,而且'_rsxf'参数值也成功获取到了并提交<br>
+
+问题处在哪里呢?  动动脑子就能知道,知乎对于真实用户使用浏览器访问主页时,并不设置验证码输入框(至少一开始不会)<br>
+
+当用户访问频率或部分操作已经达到了非常人水平,再次登录,就能看见知乎的验证码小框框了   :)  <br>
+
+好的,经过不懈努力,让知乎已经把我判断为非人类操作了,找出了他请求验证码的url<br>
+(https://www.zhihu.com/captcha.gif?r=' + t + '&type=login&lang=en)<br>
+
+其中, t代表当前时间参数,  time.time() * 1000 , 然后套上去就可以了<br>
+
+流程就变成了:<br>
+
+    1, 访问'www.zhihu.com/#signin', 并请求 'www.zhihu.com/captcha.gif', 带上指定参数获取到验证码<br>
+
+    2, 将'captcha'码 和 '_xsrf'码 加上 帐号密码, 'captcha_type', 这几个参数, 访问'www.zhihu.com/login/phone_num'<br>
+
+    3, 嗯...到这里,如果成功的话,应该会重定向到www.zhihu.com首页,并根据用户属性展示相关推荐文章<br>
+
+好,琢磨完了！, 写代码吧！
+
