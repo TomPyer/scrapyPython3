@@ -73,7 +73,7 @@ class ZhihuSpider(scrapy.Spider):
                                     method='POST',
                                     headers=self.header,
                                     formdata={'phone_num': '15521043979',
-                                              'password': 'lalala123',
+                                              'password': '******',
                                               '_xsrf': xsrf_value,
                                               'captcha_type': 'cn'},
                                     callback=self.logined,
