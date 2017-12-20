@@ -311,4 +311,38 @@ scrapy genspider zhihu www.zhihu.com    # 创建zhihu爬虫
 
 由于使用的scrapyd运行爬虫,input语句在代码中似乎不起作用,正在想别的办法..
 
-嗯...才发现密码写在里面了....刚做修改...
+嗯...才现密码写在里面了....刚做修改...
+
+终于登录成功了, 提供一个解决问题的大概思路:<br>
+
+    首先, 回顾一下模拟登录的流程<br>
+
+    1、我们先访问了('https://www.zhihu.com/captcha.gif?r=******&type=login&lang=en')获取验证码<br>
+
+    2、然后携带验证码去访问('https://www.zhihu.com/#signin')登录页面<br>
+
+    3、验证码和登录页面的'_xsrf'码这两个关键信息已经拿到了,再去进行post请求('https://www.zhihu.com/login/phone_num')<br>
+
+    4、等待服务器返回成功与否, 看返回值中的 "r" 即可, 0为成功, 1为失败<br>
+
+之前一直登陆不上是为什么呢, 因为我们在2步骤, 访问 ('https://www.zhihu.com/#signin') 时并没有存储下服务器返回的cookies信息<br>
+
+这个非常关键, 服务器返回cookies信息代表着服务器对访问端的一个身份验证, 如果没有这一层cookie, post登录请求的时候不管验证码对不对, 服务器都当作一个非法请求, 直接返回验证码错误...<br>
+
+在这里栽了那么一小会儿...<br>
+
+有想到cookies信息, settings.py开启了cookie验证, 并且在访问时也有携带meta={'cookiejar': 1} <br>
+
+但是还是一直无法成功登录, 可能我的header伪装不够... 一直被当成非法请求??<br>
+
+那么干脆一不做二不休, 我使用浏览器手动访问 ('https://www.zhihu.com/#signin') <br>
+
+然后F12查看Request Headers 中的Cookie, 然后复制下来, 整理好格式后写死在代码里！<br>
+
+然后就成功了....<br>
+
+严格来讲这应该还是一个不成功的模拟登陆, 毕竟如果手动把cookie写在代码里的话, 跟登录以后手动把cookie保存有什么区别...<br>
+
+有待后续修改...<br>
+
+不过在做大面积信息爬取的时候, 还是可以考虑手动保存多个帐号到cookie池, 轮换使用, 避免被BAN...<br>
