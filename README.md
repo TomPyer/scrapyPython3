@@ -346,3 +346,5 @@ scrapy genspider zhihu www.zhihu.com    # 创建zhihu爬虫
 有待后续修改...<br>
 
 不过在做大面积信息爬取的时候, 还是可以考虑手动保存多个帐号到cookie池, 轮换使用, 避免被BAN...<br>
+
+tips:.....好忙啊......   :(
