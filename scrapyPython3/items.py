@@ -19,3 +19,39 @@ class FirstSpiderItem(scrapy.Item):
     image_urls = scrapy.Field()
     image_paths = scrapy.Field()
     pass
+
+
+class ZhihuQuestionItem(scrapy.Item):
+    question_id = scrapy.Field()
+    question_launch_date = scrapy.Field()
+    question_title = scrapy.Field()
+    question_description = scrapy.Field()
+    question_image = scrapy.Field()
+    question_comment = scrapy.Field()
+    question_comment_num = scrapy.Field()
+    question_care_num = scrapy.Field()
+    question_view_num = scrapy.Field()
+    answer_count = scrapy.Field()
+    pass
+
+
+class ZhihuAnswerItem(scrapy.Item):
+    answer_id = scrapy.Field()
+    answer_cre_date = scrapy.Field()
+    answer_content = scrapy.Field()
+    answer_author = scrapy.Field()
+    answer_comment_num = scrapy.Field()
+    answer_zan_num = scrapy.Field()
+    pass
+
+
+class ZhihuCommentItem(scrapy.Item):
+    question_id = scrapy.Field()
+    answer_id = scrapy.Field()
+    is_question = scrapy.Field()
+    content = scrapy.Field()
+    author = scrapy.Field()
+    zan_num = scrapy.Field()
+    to_user = scrapy.Field()
+    pass
+

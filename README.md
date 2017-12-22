@@ -347,4 +347,53 @@ scrapy genspider zhihu www.zhihu.com    # 创建zhihu爬虫
 
 不过在做大面积信息爬取的时候, 还是可以考虑手动保存多个帐号到cookie池, 轮换使用, 避免被BAN...<br>
 
-tips:.....好忙啊......   :(
+tips:.....好忙啊......   :(<br>
+
+好了,来正式开干....<br>
+
+首先更新一个Items.py 文件
+    ```python
+
+    class ZhihuQuestionItem(scrapy.Item):
+        question_id = scrapy.Field()
+        question_launch_date = scrapy.Field()
+        question_author = scrapy.Field()
+        question_title = scrapy.Field()
+        question_description = scrapy.Field()
+        question_image = scrapy.Field()
+        question_comment_num = scrapy.Field()
+        question_care_num = scrapy.Field()
+        question_view_num = scrapy.Field()
+        answer_count = scrapy.Field()
+        pass
+
+
+    class ZhihuAnswerItem(scrapy.Item):
+        answer_id = scrapy.Field()
+        answer_cre_date = scrapy.Field()
+        answer_content = scrapy.Field()
+        answer_author = scrapy.Field()
+        answer_comment_num = scrapy.Field()
+        answer_zan_num = scrapy.Field()
+        pass
+
+
+    class ZhihuCommentItem(scrapy.Item):
+        question_id = scrapy.Field()
+        answer_id = scrapy.Field()
+        is_question = scrapy.Field()
+        content = scrapy.Field()
+        author = scrapy.Field()
+        zan_num = scrapy.Field()
+        to_user = scrapy.Field()
+        pass
+    ```
+
+这是第一版本, 初步观察知乎问答详情所挑出来的有用的信息, 暂时不考虑过滤辣鸡内容, 毕竟从Question出发, 注意选择分类就可以<br>
+
+简单讲一下,
+    QuestionItem用来存储id,时间,标题,问题描述,作者,关注数,浏览数,回答数,评论数,以及可能存在的图片..
+    AnsWerItem用来存储id,时间,内容,作者,评论数,赞次数..
+    CommentItem用来存储各类提问,回答中的评论,根据id索引...
+
+然后开始写代码.....等待下次更新...<br>   
