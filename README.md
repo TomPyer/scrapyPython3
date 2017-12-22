@@ -352,8 +352,6 @@ tips:.....好忙啊......   :(<br>
 好了,来正式开干....<br>
 
 首先更新一个Items.py 文件
-    ```python
-
     class ZhihuQuestionItem(scrapy.Item):
         question_id = scrapy.Field()
         question_launch_date = scrapy.Field()
@@ -387,7 +385,7 @@ tips:.....好忙啊......   :(<br>
         zan_num = scrapy.Field()
         to_user = scrapy.Field()
         pass
-    ```
+
 
 这是第一版本, 初步观察知乎问答详情所挑出来的有用的信息, 暂时不考虑过滤辣鸡内容, 毕竟从Question出发, 注意选择分类就可以<br>
 
@@ -396,4 +394,4 @@ tips:.....好忙啊......   :(<br>
     AnsWerItem用来存储id,时间,内容,作者,评论数,赞次数..
     CommentItem用来存储各类提问,回答中的评论,根据id索引...
 
-然后开始写代码.....等待下次更新...<br>   
+然后开始写代码.....等待下次更新...<br>

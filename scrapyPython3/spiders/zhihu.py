@@ -9,6 +9,8 @@ from scrapy_splash import SplashRequest
 from PIL import Image
 from wget import download
 
+from scrapyPython3.items import ZhihuAnswerItem, ZhihuCommentItem, ZhihuQuestionItem
+
 
 class ZhihuSpider(scrapy.Spider):
     name = 'zhihu'
@@ -66,16 +68,15 @@ class ZhihuSpider(scrapy.Spider):
         xsrf_value = sel.xpath('//div[@class="view view-signin"]/form/input[@name="_xsrf"]/@value') \
             .extract_first(default='')
         captcha = response.meta['captcha']
-        print(xsrf_value)
-        print(captcha)
         if xsrf_value:
             yield FormRequest(url='https://www.zhihu.com/login/phone_num',
                                     method='POST',
                                     headers=self.header,
                                     formdata={'phone_num': '15521043979',
-                                              'password': '******',
+                                              'password': 'lalala1',
                                               '_xsrf': xsrf_value,
-                                              'captcha_type': 'cn'},
+                                              'captcha_type': 'en',
+                                              'captcha': captcha},
                                     callback=self.logined,
                                     cookies=self.cookie,
                                     meta={'cookiejar': response.meta['cookiejar']})
@@ -83,5 +84,53 @@ class ZhihuSpider(scrapy.Spider):
             print('get xsrf_value error !!!!!!!!!')
 
     def logined(self, response):
-        sel = Selector(response)
         print(response.body)
+        meta = response.meta
+        yield SplashRequest('https://www.zhihu.com/', callback=self.first_page, cookies=self.cookie, meta=meta)
+
+    def first_page(self, response):
+        sel = Selector(response)
+        meta = response.meta
+
+        answer_item = ZhihuAnswerItem()
+        comment_item = ZhihuCommentItem()
+        card_div = sel.xpath('//div[@class="Card TopstoryItem"]')
+        for card in card_div:
+            # 遍历首页的基础页面,获取问题链接
+            question_div = card.xpath('.//div[@class="Feed"]')
+            question_url = ''.join([self.start_urls[0], question_div.xpath('.//div[@class="ContentItem AnswerItem"]/h2/div/a/@href').extract_frist()])
+            meta['question_id'] = question_url.split('/')[-1]
+            meta['from_theme'] = sel.xpath('//a[@class="TopicLink"]/div/div/text()').extract()
+            meta['from_theme_url'] = sel.xpath('//a[@class="TopicLink"]/@href').extract()
+            yield SplashRequest(question_url, callback=self.question_parse, cookies=self.cookie, meta=meta)
+
+    def question_parse(self, response):
+        sel = Selector(response)
+        meta = response.meta
+        question_item = ZhihuQuestionItem()
+        self.answer_info(sel)
+        header_div = sel.xpath('//div[@class="QuestionHeader-main"]')
+        question_item['question_title'] = header_div.xpath('.//h1/text()').extract_first()
+        question_item['question_id'] = meta['question_id']
+        question_item['question_description'] = header_div.xpath('.//span[@class="RichText"]/text()').extract_first()
+        question_item['question_image'] = header_div.xpath('.//span[@class="RichText"]/figure/img/@src').extract()
+        question_item['question_comment'] = sel.xpath('//div[@class="QuestionHeader-Comment"]/span/text()').extract_first()
+        follow_div = sel.xpath('//div[@class="QuestionFollowStatus"]')
+        question_item['question_care_num'] = follow_div.xpath('.//button/div[@class="NumberBoard-value"]/text()').extract_first()
+        question_item['question_view_num'] = follow_div.xpath('.//div[@class="NumberBoard-item"]/div[@class="NumberBoard-value"]/text()').extract_first()
+        question_item['answer_count'] = sel.xpath('//div[@class="List-header"]/h4/span/text()').extract_first().split('"')[1]
+        question_item['from_theme'] = meta['from_theme']
+        question_item['from_theme_url'] = meta['from_theme_url']
+        yield question_item
+
+    def answer_info(self, sel):
+        answer_item = ZhihuAnswerItem()
+        # answer_id = scrapy.Field()
+        # answer_cre_date = scrapy.Field()
+        # answer_content = scrapy.Field()
+        # answer_author = scrapy.Field()
+        # answer_comment_num = scrapy.Field()
+        # answer_zan_num = scrapy.Field()
+        for answer in sel.xpath('//div[@class="ContentItem AnswerItem"]'):
+            answer_id = answer.xpath(".//@name")
+            # .....

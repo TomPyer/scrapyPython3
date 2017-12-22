@@ -23,7 +23,8 @@ class FirstSpiderItem(scrapy.Item):
 
 class ZhihuQuestionItem(scrapy.Item):
     question_id = scrapy.Field()
-    question_launch_date = scrapy.Field()
+    # question_launch_date = scrapy.Field()
+    question_author = scrapy.Field()
     question_title = scrapy.Field()
     question_description = scrapy.Field()
     question_image = scrapy.Field()
@@ -32,6 +33,8 @@ class ZhihuQuestionItem(scrapy.Item):
     question_care_num = scrapy.Field()
     question_view_num = scrapy.Field()
     answer_count = scrapy.Field()
+    from_theme = scrapy.Field()
+    from_theme_url = scrapy.Field()
     pass
 
 
