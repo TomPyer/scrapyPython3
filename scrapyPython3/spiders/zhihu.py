@@ -91,9 +91,6 @@ class ZhihuSpider(scrapy.Spider):
     def first_page(self, response):
         sel = Selector(response)
         meta = response.meta
-
-        answer_item = ZhihuAnswerItem()
-        comment_item = ZhihuCommentItem()
         card_div = sel.xpath('//div[@class="Card TopstoryItem"]')
         for card in card_div:
             # 遍历首页的基础页面,获取问题链接
@@ -105,10 +102,11 @@ class ZhihuSpider(scrapy.Spider):
             yield SplashRequest(question_url, callback=self.question_parse, cookies=self.cookie, meta=meta)
 
     def question_parse(self, response):
+        # 处理和提取所需要的问题内容, xpath格式都是从页面上获取的
         sel = Selector(response)
         meta = response.meta
         question_item = ZhihuQuestionItem()
-        self.answer_info(sel)
+        self.answer_info(sel, meta['question_id'])  # 优先提取答案内容
         header_div = sel.xpath('//div[@class="QuestionHeader-main"]')
         question_item['question_title'] = header_div.xpath('.//h1/text()').extract_first()
         question_item['question_id'] = meta['question_id']
@@ -123,14 +121,30 @@ class ZhihuSpider(scrapy.Spider):
         question_item['from_theme_url'] = meta['from_theme_url']
         yield question_item
 
-    def answer_info(self, sel):
-        answer_item = ZhihuAnswerItem()
-        # answer_id = scrapy.Field()
-        # answer_cre_date = scrapy.Field()
-        # answer_content = scrapy.Field()
-        # answer_author = scrapy.Field()
-        # answer_comment_num = scrapy.Field()
-        # answer_zan_num = scrapy.Field()
+    def answer_info(self, sel, question_id):
         for answer in sel.xpath('//div[@class="ContentItem AnswerItem"]'):
-            answer_id = answer.xpath(".//@name")
-            # .....
+            # 遍历答案card, 评论内容也隐藏在其中
+            answer_item = ZhihuAnswerItem()
+            answer_item['question_id'] = question_id
+            answer_item['answer_id'] = answer.xpath(".//@name").extract_first()
+            answer_item['answer_cre_date'] = answer.xpath('.//meta[@itemprop="dateCreated"]/@content').extract_first()
+            answer_item['answer_content'] = '\r'.join(answer.xpath('.//span[@class="RichText CopyrightRichText-richText"]/text()').extract())
+            answer_item['answer_author'] = answer.xpath('.//meta[@itemprop="name"]/@content').extract_first()
+            answer_item['answer_comment_num'] = answer.xpath('.//meta[@itemprop="commentCount"]/@content').extract_first()
+            answer_item['answer_zan_num'] = answer.xpath('.//meta[@itemprop="upvoteCount"]/@content').extract_first()
+            yield answer_item
+            for comment in answer.xpath('//div[@class="CommentItem"]'):
+                # 提取需要的评论信息
+                comment_item = ZhihuCommentItem()
+                comment_item['question_id'] = question_id
+                comment_item['answer_id'] = answer.xpath('.//@name').extract_first()
+                comment_item['is_question'] = 1
+                content = comment.xpath('.//div[@class="RichText CommentItem-content"]/text()').extract_first()
+                comment_item['content'] = content if content else comment.xpath('.//div[@class="RichText CommentItem-content"]/p/text()').extract_first()
+                comment_item['author'] = comment.xpath('.//a[@class="UserLink-link"]/text()').extract_first()
+                comment_item['zan_num'] = comment.xpath('.//div[@class="CommentItem-footer"]/button/text()').extract_first()
+                if comment.xpath('.//span[@class="CommentItem-reply"]'):
+                    comment_item['to_user'] = comment.xpath('.//a[@class="UserLink-link"]/text()').extract()[1]
+                else:
+                    comment_item['to_user'] = ''
+                yield comment_item
