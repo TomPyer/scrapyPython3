@@ -7,6 +7,11 @@
 from scrapy.pipelines.images import ImagesPipeline
 from scrapy import Request
 from scrapy.exceptions import DropItem
+import logging
+import copy
+import pymysql
+from twisted.enterprise import adbapi
+
 
 
 class Scrapypython3Pipeline(object):
@@ -37,3 +42,63 @@ class firstSpiderImagePipeline(ImagesPipeline):
             raise DropItem("Item contains no images")
         item['image_paths'] = image_paths
         return item
+
+
+class MySQLChyxxPipeline(object):
+    def __init__(self, dbpool):
+        self.dbpool = dbpool
+
+    @classmethod
+    def from_settings(cls, settings):
+        dbargs = dict(
+            host=settings['MYSQL_HOST'],
+            db=settings['MYSQL_DBNAME'],
+            user=settings['MYSQL_USER'],
+            passwd=settings['MYSQL_PASSWD'],
+            charset='utf8',
+            cursorclass=pymysql.cursors.DictCursor,
+            use_unicode=True
+        )
+        dbpool = adbapi.ConnectionPool('MySQLdb', **dbargs)
+        return cls(dbpool)
+
+    def process_item(self, item, spider):
+        copyItem = copy.deepcopy(item)
+        d = self.dbpool.runInteraction(self._do_currency_func, copyItem, spider)
+        d.addBoth(lambda _: item)
+        d.addErrback(self._handle_error, item, spider)
+        return d
+
+    def _do_currency_func(self, conn, item, spider):
+        if 'to_user' in item.keys():
+            # 评论流程
+            sql = '''insert into zhihu_comment(question_id, answer_id, content, author, zan_num, to_user, is_question)
+                     values(%s, %s, %s, %s, %s, %s, %s, %s)
+            '''
+            args = [item['question_id'], item['answer_id'], item['content'], item['author'], item['zan_num'],
+                    item['to_user'], item['is_question']]
+            conn.execute(sql, args)
+        elif 'answer_id' in item.keys():
+            # 回答流程
+            sql = '''insert into zhihu_answer(question_id, answer_id, answer_cre_date, answer_content, answer_author,
+                          answer_comment_num, answer_zan_num)
+                     values(%s, %s, %s, %s, %s, %s, %s)
+            '''
+            args = [item['question_id'], item['answer_id'], item['answer_cre_date'], item['answer_content'],
+                    item['answer_author'], item['answer_comment_num'], item['answer_zan_num']]
+            conn.execute(sql, args)
+        else:
+            # 问题流程
+            sql = '''insert into zhihu_question(question_id, question_author, question_title, question_description,
+                    question_image, question_comment, question_comment, question_comment_num, question_care_num,
+                    question_view_num, answer_count, from_theme, from_theme_url)
+                    values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            '''
+            args = [item['question_id'], item['question_author'], item['question_title'], item['question_description'],
+                    item['question_image'], item['question_comment'], item['question_comment'],
+                    item['question_comment_num'], item['question_care_num'], item['question_view_num'],
+                    item['answer_count'], item['from_theme'], item['from_theme_url']]
+            conn.execute(sql, args)
+
+    def _handle_error(self, failue, item, spider):
+        print(failue)
