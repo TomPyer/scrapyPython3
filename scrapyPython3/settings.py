@@ -71,6 +71,7 @@ DOWNLOADER_MIDDLEWARES = {
 ITEM_PIPELINES = {
    # 'scrapyPython3.pipelines.Scrapypython3Pipeline': 300,
     'scrapy.pipelines.images.ImagesPipeline': 5,
+    'scrapyPython3.pipelines.MySQLChyxxPipeline': 300,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -102,3 +103,9 @@ IMAGES_EXPIRES = 90
 # scrapy_splash
 SPLASH_URL = 'http://192.168.99.100:8050'
 DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
+
+# MySQL数据库配置
+MYSQL_HOST = '***.***.**.***'
+MYSQL_DBNAME = '******'
+MYSQL_USER = 'root'
+MYSQL_PASSWD = ''
