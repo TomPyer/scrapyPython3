@@ -39,6 +39,7 @@ class ZhihuQuestionItem(scrapy.Item):
 
 
 class ZhihuAnswerItem(scrapy.Item):
+    question_id = scrapy.Field()
     answer_id = scrapy.Field()
     answer_cre_date = scrapy.Field()
     answer_content = scrapy.Field()
