@@ -443,7 +443,20 @@ so....有条件的就找个好的代理ip网站, 买个几万条, 或者买个�
 
 有简单的, 直接在settings.py中写如全局变量, ip pool, 添加一批可用的ip, 然后在spider文件中, 手动切换(仅提供这思路, 不建议这么做)<br>
 
+我们这里用到的是, 自定义  中间件(Middleware)  并在settings.py中启用自定义的中间件.<br>
 
-    
-其中最有用的, 就是设置代理ip
+中间件, 详细信息可参考(http://scrapy-chs.readthedocs.io/zh_CN/0.24/topics/spider-middleware.html)[Scrapyd Middleware]<br>
 
+主要是在其中添加代码来处理发送给 Spiders 的 response 及 spider 产生的 item 和 request.<br>
+
+添加代理的操作, 就在 Middleware 中的 process_request 方法中.<br>
+
+```python
+    proxies = '***.***.**.***:*****'
+    request.meta['proxy'] = proxies
+```
+不考虑其他操作的话, 在process_request方法中有这一句, 就完成了一个代理ip的设置.<br>
+
+完成代理ip的切换后, 可以在 process_response 方法中检测使用该代理ip访问后的处理结果, 根据处理结果来进行进一步的操作.<br>
+
+ip代理文件还在编写修改中...
