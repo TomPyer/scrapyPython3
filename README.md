@@ -352,6 +352,7 @@ tips:.....好忙啊......   :(<br>
 好了,来正式开干....<br>
 
 首先更新一个Items.py 文件
+
     class ZhihuQuestionItem(scrapy.Item):
         question_id = scrapy.Field()
         question_launch_date = scrapy.Field()
@@ -364,8 +365,7 @@ tips:.....好忙啊......   :(<br>
         question_view_num = scrapy.Field()
         answer_count = scrapy.Field()
         pass
-
-
+        
     class ZhihuAnswerItem(scrapy.Item):
         answer_id = scrapy.Field()
         answer_cre_date = scrapy.Field()
@@ -390,6 +390,7 @@ tips:.....好忙啊......   :(<br>
 这是第一版本, 初步观察知乎问答详情所挑出来的有用的信息, 暂时不考虑过滤辣鸡内容, 毕竟从Question出发, 注意选择分类就可以<br>
 
 简单讲一下,
+
     QuestionItem用来存储id,时间,标题,问题描述,作者,关注数,浏览数,回答数,评论数,以及可能存在的图片..
     AnsWerItem用来存储id,时间,内容,作者,评论数,赞次数..
     CommentItem用来存储各类提问,回答中的评论,根据id索引...
@@ -401,6 +402,7 @@ tips:.....好忙啊......   :(<br>
 也不提倡在spider中做分析, 撑死做一个数据过滤, 明确分工才对<br>
 
 后半段流程介绍:
+
     1、登录成功后, 携带cookie, header 访问 (www.zhihu.com) 首页
     2、提取首页的推荐问答信息(默认5条, 暂时不多取, 示例爬虫没必要)
     3、根据每个问答的url进入问答详情页面(一层for)
