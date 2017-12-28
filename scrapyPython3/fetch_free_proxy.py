@@ -27,10 +27,10 @@ def fetch_kxdaili(page):
     """
     proxyes = []
     try:
-        url = "http://www.kxdaili.com/dailiip/1/%d.html" % page
+        url = "http://www.kxdaili.com/dailiip/1/%d.html#ip" % page
         soup = get_soup(url)
         table_tag = soup.find("table", attrs={"class": "segment"})
-        trs = table_tag.tbody.find_all("tr")
+        trs = table_tag.find_all("tr")
         for tr in trs:
             tds = tr.find_all("td")
             ip = tds[0].text
@@ -40,6 +40,7 @@ def fetch_kxdaili(page):
                 proxy = "%s:%s" % (ip, port)
                 proxyes.append(proxy)
     except:
+        traceback.print_exc()
         logger.warning("fail to fetch from kxdaili")
     return proxyes
 
@@ -104,28 +105,6 @@ def fetch_xici():
     return proxyes
 
 
-def fetch_ip181():
-    """
-    http://www.ip181.com/
-    """
-    proxyes = []
-    try:
-        url = "http://www.ip181.com/"
-        soup = get_soup(url)
-        table = soup.find("table")
-        trs = table.find_all("tr")
-        for i in range(1, len(trs)):
-            tds = trs[i].find_all("td")
-            ip = tds[0].text
-            port = tds[1].text
-            latency = tds[4].text[:-2]
-            if float(latency) < 1:
-                proxyes.append("%s:%s" % (ip, port))
-    except Exception as e:
-        logger.warning("fail to fetch from ip181: %s" % e)
-    return proxyes
-
-
 def fetch_httpdaili():
     """
     http://www.httpdaili.com/mfdl/
@@ -148,6 +127,7 @@ def fetch_httpdaili():
             except:
                 pass
     except Exception as e:
+        traceback.print_exc()
         logger.warning("fail to fetch from httpdaili: %s" % e)
     return proxyes
 
@@ -161,12 +141,13 @@ def fetch_66ip():
     try:
         # 修改getnum大小可以一次获取不同数量的代理
         url = "http://www.66ip.cn/nmtq.php?getnum=10&isp=0&anonymoustype=3&start=&ports=&export=&ipaddress=&area=1&proxytype=0&api=66ip"
-        content = get_html(url)
+        content = str(get_html(url))
         urls = content.split("</script>")[-1].split("<br />")
         for u in urls:
             if u.strip():
                 proxyes.append(u.strip())
     except Exception as e:
+        traceback.print_exc()
         logger.warning("fail to fetch from httpdaili: %s" % e)
     return proxyes
 
@@ -189,6 +170,7 @@ def fetch_nianshao():
                 if type == u'高匿':
                     proxyes.append("%s:%s" % (ip, port))
             except:
+                traceback.print_exc()
                 pass
     except Exception as e:
         logger.warning("fail to fetch from httpdaili: %s" % e)
@@ -206,14 +188,14 @@ def check(proxy):
         return False
 
 
-def fetch_all(endpage=2):
+def fetch_all(endpage=10):
     proxyes = []
-    # for i in range(1, endpage):
-    #     proxyes += fetch_kxdaili(i)
-    # proxyes += fetch_mimvp()
+    for i in range(1, endpage):
+        proxyes += fetch_kxdaili(i)
+    print('--------------------:', proxyes)
+    proxyes += fetch_mimvp()
     proxyes += fetch_xici()
-    # proxyes += fetch_ip181()
-    proxyes += fetch_httpdaili()
+    # proxyes += fetch_httpdaili()
     proxyes += fetch_66ip()
     proxyes += fetch_nianshao()
     valid_proxyes = []
