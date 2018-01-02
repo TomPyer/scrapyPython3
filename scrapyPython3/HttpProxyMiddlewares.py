@@ -121,14 +121,14 @@ class HttpProxyMiddleware(object):
         # 两轮proxy_index==0的时间间隔过短， 说明出现了验证码抖动，扩展代理列表
         if self.proxy_index == 0 and datetime.now() < self.last_no_proxy_time + timedelta(minutes=2):
             logger.info("captcha thrashing")
-            self.fetch_new_proxyes()
+            self.dump_valid_proxy()
 
         if self.len_valid_proxy() <= self.fixed_proxy or self.len_valid_proxy() < self.extend_proxy_threshold: # 如果代理列表中有效的代理不足的话重置为valid
             self.reset_proxyes()
 
         if self.len_valid_proxy() < self.extend_proxy_threshold: # 代理数量仍然不足, 抓取新的代理
             logger.info("valid proxy < threshold: %d/%d" % (self.len_valid_proxy(), self.extend_proxy_threshold))
-            self.fetch_new_proxyes()
+            self.dump_valid_proxy()
 
         logger.info("now using new proxy: %s" % self.proxyes[self.proxy_index]["proxy"])
 

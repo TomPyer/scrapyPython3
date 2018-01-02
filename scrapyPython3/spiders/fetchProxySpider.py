@@ -29,6 +29,7 @@ class FetchproxyspiderSpider(scrapy.Spider):
                 yield SplashRequest(url, self.parse, args={'wait': 0.5}, meta={'fr': k})
 
     def parse(self, response):
+        # 此方法仅提供部分代理网站抓取提示和简单保存流程
         sel = Selector(response)
         meta = response.meta
         try:
@@ -65,3 +66,7 @@ class FetchproxyspiderSpider(scrapy.Spider):
                 pass
         except:
             logging.error(traceback.print_exc())
+        finally:
+            with open('D:/tangxuelin/stutest/scrapyPython3/scrapyPython3/proxyes.dat', 'wb') as f:
+                for pro in self.proxys:
+                    f.write(pro)
