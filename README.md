@@ -481,15 +481,107 @@ pip install redis
 pip install scrapy-redis
 ```
 #####原理简述:
-所谓分布式, 大致来说,就是需要计算的数据量太大,任务太多,一台机器搞不定或者效率极低,需要多台机器共同协作（而不是孤立地各做各的,所以需要通信）,最后所有机器完成的任务汇总在一起,完成大量任务.
+######所谓分布式,大致来说,就是需要计算的数据量太大,任务太多,一台机器搞不定或者效率极低,需要多台机器共同协作（而不是孤立地各做各的,所以需要通信）,最后所有机器完成的任务汇总在一起,完成大量任务.
+######任务分割的方法,是首先爬完了url或者id,需要爬取的任务是确定的,这个时候可以人工地将任务划分成几个互不重复的子任务,交给多台机器多个脚本去跑,这样彼此之间不通信不交流,也不会有影响.
+######然而还有一种情况,输入的待爬任务并不是固定不变的,而是实时变化的,这种情况下没办法人工以固定不变的逻辑去分割任务还能确保互相独立、互不干扰,最好的办法就是把任务集中在一处,在各台机器能互相通信的前提下,互不干扰地完成任务.
+######分布式爬虫还有一个动机,就是以机器换速度.有的网站反爬措施很严格,你必须得慢慢爬,否则稍微一浪就被封,这种情况下只靠一台机器一个脚本的速度肯定是无法容忍的.
+######但是对于分布式爬虫,每一个机器的脚本都有不同的IP或者帐号cookie,都以很慢的速度在爬,当并行任务多了之后,总体上的速度就很可观.
+######redis是一款最基于内存的no-sql数据库,简单、小巧、强大! 就非常适合用在分布式系统里! 
 
-任务分割的方法,是首先爬完了url或者id,需要爬取的任务是确定的,这个时候可以人工地将任务划分成几个互不重复的子任务,交给多台机器多个脚本去跑,这样彼此之间不通信不交流,也不会有影响.
+#####Scrapy-redis
+######scrapy-redis实现分布式，其实从原理上来说很简单，这里为描述方便，我们把自己的核心服务器称为master，而把用于跑爬虫程序的机器称为slave。
 
-然而还有一种情况,输入的待爬任务并不是固定不变的,而是实时变化的,这种情况下没办法人工以固定不变的逻辑去分割任务还能确保互相独立、互不干扰,最好的办法就是把任务集中在一处,在各台机器能互相通信的前提下,互不干扰地完成任务.
+######我们知道，采用scrapy框架抓取网页，我们需要首先给定它一些start_urls，爬虫首先访问start_urls里面的url，再根据我们的具体逻辑，对里面的元素、或者是其他的二级、三级页面进行抓取。而要实现分布式，我们只需要在这个starts_urls里面做文章就行了。
 
-分布式爬虫还有一个动机,就是以机器换速度.有的网站反爬措施很严格,你必须得慢慢爬,否则稍微一浪就被封,这种情况下只靠一台机器一个脚本的速度肯定是无法容忍的.
+######我们在master上搭建一个redis数据库（注意这个数据库只用作url的存储，不关心爬取的具体数据，不要和后面的mongodb或者mysql混淆），并对每一个需要爬取的网站类型，都开辟一个单独的列表字段。通过设置slave上scrapy-redis获取url的地址为master地址。这样的结果就是，尽管有多个slave，然而大家获取url的地方只有一个，那就是服务器master上的redis数据库。
 
-但是对于分布式爬虫,每一个机器的脚本都有不同的IP或者帐号cookie,都以很慢的速度在爬,当并行任务多了之后,总体上的速度就很可观.
+######并且，由于scrapy-redis自身的队列机制，slave获取的链接不会相互冲突。这样各个slave在完成抓取任务之后，再把获取的结果汇总到服务器上（这时的数据存储不再在是redis，而是mongodb或者 mysql等存放具体内容的数据库了）
 
-redis是一款最基于内存的no-sql数据库,简单、小巧、强大! 就非常适合用在分布式系统里! 
+######这种方法的还有好处就是程序移植性强，只要处理好路径问题，把slave上的程序移植到另一台机器上运行，基本上就是复制粘贴的事情。
+#####scrapy.settings.py 可能用上的配置信息
+```python
+    #启用Redis调度存储请求队列
+    SCHEDULER = "scrapy_redis.scheduler.Scheduler"
+    
+    #确保所有的爬虫通过Redis去重
+    DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
+    
+    #默认请求序列化使用的是pickle 但是我们可以更改为其他类似的。PS：这玩意儿2.X的可以用。3.X的不能用
+    #SCHEDULER_SERIALIZER = "scrapy_redis.picklecompat"
+    
+    #不清除Redis队列、这样可以暂停/恢复 爬取
+    #SCHEDULER_PERSIST = True
+    
+    #使用优先级调度请求队列 （默认使用）
+    #SCHEDULER_QUEUE_CLASS = 'scrapy_redis.queue.PriorityQueue'
+    #可选用的其它队列
+    #SCHEDULER_QUEUE_CLASS = 'scrapy_redis.queue.FifoQueue'
+    #SCHEDULER_QUEUE_CLASS = 'scrapy_redis.queue.LifoQueue'
+    
+    #最大空闲时间防止分布式爬虫因为等待而关闭
+    #这只有当上面设置的队列类是SpiderQueue或SpiderStack时才有效
+    #并且当您的蜘蛛首次启动时，也可能会阻止同一时间启动（由于队列为空）
+    #SCHEDULER_IDLE_BEFORE_CLOSE = 10
+    
+    #将清除的项目在redis进行处理
+    ITEM_PIPELINES = {
+        'scrapy_redis.pipelines.RedisPipeline': 300
+    }
+    
+    #序列化项目管道作为redis Key存储
+    #REDIS_ITEMS_KEY = '%(spider)s:items'
+    
+    #默认使用ScrapyJSONEncoder进行项目序列化
+    #You can use any importable path to a callable object.
+    #REDIS_ITEMS_SERIALIZER = 'json.dumps'
+    
+    #指定连接到redis时使用的端口和地址（可选）
+    #REDIS_HOST = 'localhost'
+    #REDIS_PORT = 6379
+    
+    #指定用于连接redis的URL（可选）
+    #如果设置此项，则此项优先级高于设置的REDIS_HOST 和 REDIS_PORT
+    #REDIS_URL = 'redis://user:pass@hostname:9001'
+    
+    #自定义的redis参数（连接超时之类的）
+    #REDIS_PARAMS  = {}
+    
+    #自定义redis客户端类
+    #REDIS_PARAMS['redis_cls'] = 'myproject.RedisClient'
+    
+    #如果为True，则使用redis的'spop'进行操作。
+    #如果需要避免起始网址列表出现重复，这个选项非常有用。开启此选项urls必须通过sadd添加，否则会出现类型错误。
+    #REDIS_START_URLS_AS_SET = False
+    
+    #RedisSpider和RedisCrawlSpider默认 start_usls 键
+    #REDIS_START_URLS_KEY = '%(name)s:start_urls'
+    
+    #设置redis使用utf-8之外的编码
+    #REDIS_ENCODING = 'latin1'
+```
+##### 必备项
+```python 
+    SCHEDULER = "scrapy_redis.scheduler.Scheduler"
+    
+    DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
+    
+    REDIS_URL = 'redis://root:密码@主机ＩＰ:端口'
+```
+######偷偷的在settings.py中添加了一小部分agents用来对付一些防爬机制
 
+##### 实现步骤
+```python
+    1. 准备两台机器,分别为master与slave端(master端推荐linux系统)
+    2. master中的爬虫运行时会将提取到的url封装成request并放入redis数据库中, 并且业务爬虫会从redis中提取出request后下载并解析数据, 将item也存入redis中
+    3. slave中的爬虫仅负责从master的redis中提取出request对象并进行下载和解析, 将item存入redis中
+    4. 由业务爬虫努力工作, 将master的redis中的request取空后, 再来处理redis中的item数据.
+    5. master里的reids还有一个数据"dmoz:dupefilter"是用来存储抓取过的url的指纹（使用哈希函数将url运算后的结果），是防止重复抓取的
+```
+##### master 端 redis配置
+```python
+    REDIS_HOST = 'localhost'
+    
+    REDIS_PORT = 6379
+    
+    REDIS_PASS = '你的密码'   # 非必须
+```
