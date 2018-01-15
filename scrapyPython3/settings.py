@@ -108,9 +108,9 @@ DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
 
 # MySQL数据库配置
 MYSQL_HOST = '127.0.0.1'
-MYSQL_DBNAME = ''
+MYSQL_DBNAME = 'bingchonghai'
 MYSQL_USER = 'root'
-MYSQL_PASSWD = ''
+MYSQL_PASSWD = '123456'
 
 agents = [
     "Mozilla/5.0 (Linux; U; Android 2.3.6; en-us; Nexus S Build/GRK39F) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1",

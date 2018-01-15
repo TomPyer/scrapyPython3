@@ -59,3 +59,12 @@ class ZhihuCommentItem(scrapy.Item):
     to_user = scrapy.Field()
     pass
 
+
+class YzyQuestionItem(scrapy.Item):
+    question_id = scrapy.Field()
+    answer_id = scrapy.Field()
+    question_info = scrapy.Field()
+    answer_info = scrapy.Field()
+    image_url = scrapy.Field()
+    question_type = scrapy.Field()
+    pass

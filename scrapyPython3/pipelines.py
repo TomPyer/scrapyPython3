@@ -70,35 +70,42 @@ class MySQLChyxxPipeline(object):
         return d
 
     def _do_currency_func(self, conn, item, spider):
-        if 'to_user' in item.keys():
-            # 评论流程
-            sql = '''insert into zhihu_comment(question_id, answer_id, content, author, zan_num, to_user, is_question)
-                     values(%s, %s, %s, %s, %s, %s, %s, %s)
+        if spider.name == 'zhihuSpider':
+            if 'to_user' in item.keys():
+                # 评论流程
+                sql = '''insert into zhihu_comment(question_id, answer_id, content, author, zan_num, to_user, is_question)
+                         values(%s, %s, %s, %s, %s, %s, %s, %s)
+                '''
+                args = [item['question_id'], item['answer_id'], item['content'], item['author'], item['zan_num'],
+                        item['to_user'], item['is_question']]
+                conn.execute(sql, args)
+            elif 'answer_id' in item.keys():
+                # 回答流程
+                sql = '''insert into zhihu_answer(question_id, answer_id, answer_cre_date, answer_content, answer_author,
+                              answer_comment_num, answer_zan_num)
+                         values(%s, %s, %s, %s, %s, %s, %s)
+                '''
+                args = [item['question_id'], item['answer_id'], item['answer_cre_date'], item['answer_content'],
+                        item['answer_author'], item['answer_comment_num'], item['answer_zan_num']]
+                conn.execute(sql, args)
+            else:
+                # 问题流程
+                sql = '''insert into zhihu_question(question_id, question_author, question_title, question_description,
+                        question_image, question_comment, question_comment, question_comment_num, question_care_num,
+                        question_view_num, answer_count, from_theme, from_theme_url)
+                        values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                '''
+                args = [item['question_id'], item['question_author'], item['question_title'], item['question_description'],
+                        item['question_image'], item['question_comment'], item['question_comment'],
+                        item['question_comment_num'], item['question_care_num'], item['question_view_num'],
+                        item['answer_count'], item['from_theme'], item['from_theme_url']]
+                conn.execute(sql, args)
+        elif spider.name == 'yzySpider':
+            sql = '''insert into bch_question(question_id, answer_id, question_info, answer_info, image_url, question_type)
+                     values(%s, %s, %s, %s, %s, %s)
             '''
-            args = [item['question_id'], item['answer_id'], item['content'], item['author'], item['zan_num'],
-                    item['to_user'], item['is_question']]
-            conn.execute(sql, args)
-        elif 'answer_id' in item.keys():
-            # 回答流程
-            sql = '''insert into zhihu_answer(question_id, answer_id, answer_cre_date, answer_content, answer_author,
-                          answer_comment_num, answer_zan_num)
-                     values(%s, %s, %s, %s, %s, %s, %s)
-            '''
-            args = [item['question_id'], item['answer_id'], item['answer_cre_date'], item['answer_content'],
-                    item['answer_author'], item['answer_comment_num'], item['answer_zan_num']]
-            conn.execute(sql, args)
-        else:
-            # 问题流程
-            sql = '''insert into zhihu_question(question_id, question_author, question_title, question_description,
-                    question_image, question_comment, question_comment, question_comment_num, question_care_num,
-                    question_view_num, answer_count, from_theme, from_theme_url)
-                    values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-            '''
-            args = [item['question_id'], item['question_author'], item['question_title'], item['question_description'],
-                    item['question_image'], item['question_comment'], item['question_comment'],
-                    item['question_comment_num'], item['question_care_num'], item['question_view_num'],
-                    item['answer_count'], item['from_theme'], item['from_theme_url']]
+            args = (item['question_id'], item['answer_id'], item['question_info'], item['answer_info'], item['image_url'], item['question_type'])
             conn.execute(sql, args)
 
     def _handle_error(self, failue, item, spider):
-        print(failue)
+        logging.error(failue)
