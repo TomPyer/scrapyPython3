@@ -27,10 +27,12 @@ ROBOTSTXT_OBEY = False
 # Configure a delay for requests for the same website (default: 0)
 # See http://scrapy.readthedocs.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
-DOWNLOAD_DELAY = 3
+DOWNLOAD_DELAY = 0.5
 # The download delay setting will honor only one of:
 #CONCURRENT_REQUESTS_PER_DOMAIN = 16
 #CONCURRENT_REQUESTS_PER_IP = 16
+
+LOG_LEVEL = 'DEBUG'
 
 # Disable cookies (enabled by default)
 COOKIES_ENABLED = True
@@ -105,8 +107,8 @@ SPLASH_URL = 'http://192.168.99.100:8050'
 DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
 
 # MySQL数据库配置
-MYSQL_HOST = '***.***.**.***'
-MYSQL_DBNAME = '******'
+MYSQL_HOST = '127.0.0.1'
+MYSQL_DBNAME = ''
 MYSQL_USER = 'root'
 MYSQL_PASSWD = ''
 
