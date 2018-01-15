@@ -587,3 +587,5 @@ pip install scrapy-redis
 ```
 
 1.4  准备年会以及年终工作总结中...
+
+关于scrapy_redis的具体实现就先不做演示了,新的项目立项准备中!
