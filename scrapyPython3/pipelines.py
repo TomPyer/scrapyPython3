@@ -100,12 +100,18 @@ class MySQLChyxxPipeline(object):
                         item['question_comment_num'], item['question_care_num'], item['question_view_num'],
                         item['answer_count'], item['from_theme'], item['from_theme_url']]
                 conn.execute(sql, args)
-        elif spider.name == 'yzySpider':
-            sql = '''insert into bch_question(question_id, answer_id, question_info, answer_info, image_url, question_type)
-                     values(%s, %s, %s, %s, %s, %s)
-            '''
-            args = (item['question_id'], item['answer_id'], item['question_info'], item['answer_info'], item['image_url'], item['question_type'])
-            conn.execute(sql, args)
+        elif spider.name in ['yzySpider', 'laodaoSpider']:
+            all_id_sql = '''select id from bch_question'''
+            conn.execute(all_id_sql)
+            all_id_list = conn.fetchall()
+            if item['question_id'] not in all_id_list:
+                sql = '''insert into bch_question(question_id, answer_id, question_info, answer_info, image_url, question_type)
+                         values(%s, %s, %s, %s, %s, %s)
+                '''
+                args = (item['question_id'], item['answer_id'], item['question_info'], item['answer_info'], item['image_url'], item['question_type'])
+                conn.execute(sql, args)
+            else:
+                logging.warning('this id is exist ! %s' % item['question_id'])
 
     def _handle_error(self, failue, item, spider):
         logging.error(failue)
