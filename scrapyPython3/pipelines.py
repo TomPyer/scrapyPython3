@@ -105,10 +105,10 @@ class MySQLChyxxPipeline(object):
             conn.execute(all_id_sql)
             all_id_list = conn.fetchall()
             if item['question_id'] not in all_id_list:
-                sql = '''insert into bch_question(question_id, answer_id, question_info, answer_info, image_url, question_type)
-                         values(%s, %s, %s, %s, %s, %s)
+                sql = '''insert into bch_question(question_id, answer_id, question_info, answer_info, image_url, question_type, websit)
+                         values(%s, %s, %s, %s, %s, %s, %s)
                 '''
-                args = (item['question_id'], item['answer_id'], item['question_info'], item['answer_info'], item['image_url'], item['question_type'])
+                args = (item['question_id'], item['answer_id'], item['question_info'], item['answer_info'], item['image_url'], item['question_type'], item['websit'])
                 conn.execute(sql, args)
             else:
                 logging.warning('this id is exist ! %s' % item['question_id'])

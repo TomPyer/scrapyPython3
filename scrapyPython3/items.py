@@ -67,4 +67,5 @@ class YzyQuestionItem(scrapy.Item):
     answer_info = scrapy.Field()
     image_url = scrapy.Field()
     question_type = scrapy.Field()
+    websit = scrapy.Field()
     pass

@@ -42,4 +42,5 @@ class YzyspiderSpider(scrapy.Spider):
         item['question_info'] = meta['que_info']
         item['image_url'] = meta['img_url']
         item['question_type'] = meta['que_type']
+        item['websit'] = 'yzy'
         yield item
