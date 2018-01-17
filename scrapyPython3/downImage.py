@@ -25,7 +25,7 @@ def download_img(ur, ty, nam):
 def get_img_data():
     conn = None
     try:
-        conn = pymysql.connect(host='192.168.30.161', port=3306, user='root', password='', db='gds_argidata20170324', charset='utf8')
+        conn = pymysql.connect(host='***', port=3306, user='root', password='', db='***', charset='utf8')
         cursor = conn.cursor()
         sql = '''
             select question.question_id, question.question_info, question.image_url, question.crop_name, answer.answer_info
