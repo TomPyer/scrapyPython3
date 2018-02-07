@@ -10,6 +10,7 @@ from scrapy.exceptions import DropItem
 import logging
 import copy
 import pymysql
+import logging
 from twisted.enterprise import adbapi
 
 
@@ -65,11 +66,11 @@ class MySQLChyxxPipeline(object):
     def process_item(self, item, spider):
         copyItem = copy.deepcopy(item)
         d = self.dbpool.runInteraction(self._do_currency_func, copyItem, spider)
-        d.addBoth(lambda _: item)
         d.addErrback(self._handle_error, item, spider)
         return d
 
     def _do_currency_func(self, conn, item, spider):
+        import traceback
         if spider.name == 'zhihuSpider':
             if 'to_user' in item.keys():
                 # 评论流程
@@ -112,6 +113,19 @@ class MySQLChyxxPipeline(object):
                 conn.execute(sql, args)
             else:
                 logging.warning('this id is exist ! %s' % item['question_id'])
+        elif spider.name == 'gdstats':
+            if 'value_' in item.keys():
+                # 常规表流程
+                try:
+                    sql = '''insert into gd_zyjjzb(year_, area, section_, target, value_, grow_b)
+                             values(%s, %s, %s, %s, %s, %s)'''
+                    conn.execute(sql, (item['year_'], item['area'], item['section_'], item['target'], item['value_'],
+                                       item['grow_b']))
+                except Exception as e:
+                    logging.error(traceback.print_exc())
+            else:
+                # 特殊表流程
+                pass
 
     def _handle_error(self, failue, item, spider):
         logging.error(failue)

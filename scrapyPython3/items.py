@@ -69,3 +69,37 @@ class YzyQuestionItem(scrapy.Item):
     question_type = scrapy.Field()
     websit = scrapy.Field()
     pass
+
+
+class CgTableItem(scrapy.Item):
+    table = scrapy.Field()
+    year_ = scrapy.Field()
+    area = scrapy.Field()
+    target = scrapy.Field()
+    section_ = scrapy.Field()
+    value_ = scrapy.Field()
+    grow_b = scrapy.Field()
+    company = scrapy.Field()
+    pass
+
+
+class TsTableItem(scrapy.Item):
+    table = scrapy.Field()
+    year = scrapy.Field()
+    area = scrapy.Field()
+    target = scrapy.Field()
+    section = scrapy.Field()
+    company = scrapy.Field()
+    sh_value = scrapy.Field()
+    sh_grow_b = scrapy.Field()
+    mc_value = scrapy.Field()
+    mc_grow_b = scrapy.Field()
+    zc_value = scrapy.Field()
+    zc_grow_b = scrapy.Field()
+    dj_bn = scrapy.Field()
+    dj_sn = scrapy.Field()
+    dj_grow_b = scrapy.Field()
+    lj_bn = scrapy.Field()
+    lj_sn = scrapy.Field()
+    lj_grow_b = scrapy.Field()
+    pass
