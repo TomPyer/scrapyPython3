@@ -66,7 +66,7 @@ class MySQLChyxxPipeline(object):
     def process_item(self, item, spider):
         copyItem = copy.deepcopy(item)
         d = self.dbpool.runInteraction(self._do_currency_func, copyItem, spider)
-        d.addErrback(self._handle_error, item, spider)
+        # d.addErrback(self._handle_error, item, spider)
         return d
 
     def _do_currency_func(self, conn, item, spider):
@@ -117,15 +117,33 @@ class MySQLChyxxPipeline(object):
             if 'value_' in item.keys():
                 # 常规表流程
                 try:
-                    sql = '''insert into gd_zyjjzb(year_, area, section_, target, value_, grow_b)
-                             values(%s, %s, %s, %s, %s, %s)'''
-                    conn.execute(sql, (item['year_'], item['area'], item['section_'], item['target'], item['value_'],
-                                       item['grow_b']))
+                    if 'company' in item.keys() and 'sh_value' not in item.keys():
+                        logging.warning('this company sql !!!!!!!!!!!!!!!!!!!!')
+                        sql = '''insert into %s(year_, area, section_, target, value_, grow_b, company)
+                                 values(%s)''' % (item['table'], "%s, %s, %s, %s, %s, %s, %s")
+                        conn.execute(sql,
+                                     (item['year_'], item['area'], item['section_'], item['target'], item['value_'],
+                                      item['grow_b'], item['company']))
+                    else:
+                        logging.warning('this other sql !!!!!!!!!!!!!!!!!!')
+                        sql = '''insert into %s(year_, area, section_, target, value_, grow_b)
+                                                         values(%s)''' % (item['table'], "%s, %s, %s, %s, %s, %s")
+                        conn.execute(sql,
+                                     (item['year_'], item['area'], item['section_'], item['target'], item['value_'],
+                                      item['grow_b']))
                 except Exception as e:
-                    logging.error(traceback.print_exc())
-            else:
+                    logging.error(e)
+                    traceback.print_exc()
+            elif 'sh_value' in item.keys():
                 # 特殊表流程
-                pass
+                logging.warning('this is sh_value sql !!!!!!!!!!!!!!!!')
+                sql = '''insert into %s(year_, area, section_, target, sh_value, sh_grow_b, mc_value, zc_value,
+                                                                         zc_grow_b, company) values(%s)''' % (
+                    item['table'], "%s, %s, %s, %s, %s, %s, %s, %s, %s, %s")
+                conn.execute(sql,
+                             (item['year_'], item['area'], item['section_'], item['target'], item['sh_value'],
+                              item['sh_grow_b'], item['mc_value'], item['zc_value'], item['zc_grow_b'],
+                              item['company']))
 
     def _handle_error(self, failue, item, spider):
         logging.error(failue)
