@@ -72,7 +72,7 @@ DOWNLOADER_MIDDLEWARES = {
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
    # 'scrapyPython3.pipelines.Scrapypython3Pipeline': 300,
-    'scrapy.pipelines.images.ImagesPipeline': 5,
+   #  'scrapy.pipelines.images.ImagesPipeline': 5,
     'scrapyPython3.pipelines.MySQLChyxxPipeline': 300,
 }
 
@@ -107,10 +107,10 @@ SPLASH_URL = 'http://192.168.99.100:8050'
 DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
 
 # MySQL数据库配置
-MYSQL_HOST = '127.0.0.1'
-MYSQL_DBNAME = 'bingchonghai'
+MYSQL_HOST = '192.168.30.161'
+MYSQL_DBNAME = 'gdstats'
 MYSQL_USER = 'root'
-MYSQL_PASSWD = '123456'
+MYSQL_PASSWD = ''
 
 agents = [
     "Mozilla/5.0 (Linux; U; Android 2.3.6; en-us; Nexus S Build/GRK39F) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1",

@@ -57,19 +57,28 @@ class GdstatsSpider(scrapy.Spider):
         url_list = []
         for li in ul_obj:
             a_text = li.xpath('.//a/text()').extract_first()
-            if '12月' in a_text or ('季' not in a_text and '半' not in a_text and '收' not in a_text):
-                try:
-                    meta['year'] = re.findall("\d+", a_text)[0]
-                except Exception as e:
-                    logging.error(e)
-                    continue
-                meta['section'] = str('1-12月')
-                meta['area'] = str('广东') if meta['name'] != 'bfsszyjjzb' else str('部分省市')
-                func = meta['func']
-                a_url = li.xpath(".//a/@href").extract_first()[2::]
-                next_url = ''.join([meta['g_url'], a_url])
-                url_list.append(next_url)
-                yield SplashRequest(next_url, func, meta=meta)
+            if meta['name'] == 'zynzwbzmj' and '播种面积' in a_text:
+                continue
+            if meta['name'] in ['gmjjzyzb', 'bfsszyjjzb'] and '12月' not in a_text:
+                continue
+            if meta['name'] in ['nyzcz', 'xmysc'] and ('季' in a_text and '半' in a_text):
+                continue
+            if meta['name'] == 'zynzwcl' and '收' in a_text:
+                continue
+            if meta['name'] in ['fsjdgnsczz', 'jdgnsczz'] and '4季度' not in a_text:
+                continue
+            try:
+                meta['year'] = re.findall("\d+", a_text)[0]
+            except Exception as e:
+                logging.error(e)
+                continue
+            meta['section'] = str('1-12月')
+            meta['area'] = str('广东') if meta['name'] != 'bfsszyjjzb' else str('部分省市')
+            func = meta['func']
+            a_url = li.xpath(".//a/@href").extract_first()[2::]
+            next_url = ''.join([meta['g_url'], a_url])
+            url_list.append(next_url)
+            yield SplashRequest(next_url, func, meta=meta)
 
     def gmjjzyzb_parse(self, response):
         # 广东国民经济主要指标

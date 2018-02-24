@@ -85,10 +85,10 @@ class CgTableItem(scrapy.Item):
 
 class TsTableItem(scrapy.Item):
     table = scrapy.Field()
-    year = scrapy.Field()
+    year_ = scrapy.Field()
     area = scrapy.Field()
     target = scrapy.Field()
-    section = scrapy.Field()
+    section_ = scrapy.Field()
     company = scrapy.Field()
     sh_value = scrapy.Field()
     sh_grow_b = scrapy.Field()
